@@ -1,5 +1,5 @@
-import { getContactPage } from '@/lib/sanity-queries'
-import type { ContactPage } from '@/lib/sanity'
+import { getContactPage } from '@/lib/content-queries'
+import type { ContactPage } from '@/lib/content'
 import ContactClient from './ContactClient'
 
 export default async function ContactPage() {

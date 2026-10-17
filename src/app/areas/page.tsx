@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import SanityAreasPage from '@/components/SanityAreasPage'
+import ContentAreasPage from '@/components/ContentAreasPage'
 
 export const metadata: Metadata = {
   title: 'Soul Care - Areas of Focus',
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function AreasPage() {
-  return <SanityAreasPage />
+  return <ContentAreasPage />
 }

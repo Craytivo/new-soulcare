@@ -1,5 +1,5 @@
-﻿import type { Metadata } from 'next'
-import { getTermsOfUsePage } from '@/lib/sanity-queries'
+import type { Metadata } from 'next'
+import { getTermsOfUsePage } from '@/lib/content-queries'
 import { PortableText } from '@portabletext/react'
 import PrintButton from '@/components/PrintButton'
 import Link from 'next/link'

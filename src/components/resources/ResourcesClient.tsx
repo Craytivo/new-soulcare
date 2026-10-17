@@ -2,9 +2,9 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import { Resource } from '@/lib/sanity'
+import { Resource } from '@/lib/content'
 import GatedDownloadButton from './GatedDownloadButton'
-import { urlFor } from '@/lib/sanity'
+import { urlFor } from '@/lib/content'
 import Image from 'next/image'
 
 const categories = [

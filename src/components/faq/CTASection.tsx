@@ -50,7 +50,7 @@ export default function CTASection({ icon }: CTASectionProps) {
             Still have questions?
           </h3>
           <p className="leading-relaxed text-charcoal/75">
-            We&apos;re happy to help. Book a free consultation or reach out to our team — no
+            We&apos;re happy to help. Book a free consultation or reach out to our team â€” no
             pressure, just support.
           </p>
         </div>

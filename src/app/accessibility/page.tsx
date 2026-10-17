@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getAccessibilityPage } from '@/lib/sanity-queries'
+import { getAccessibilityPage } from '@/lib/content-queries'
 import { PortableText } from '@portabletext/react'
 
 export const revalidate = 300

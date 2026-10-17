@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getFAQPage } from '@/lib/sanity-queries'
+import { getFAQPage } from '@/lib/content-queries'
 import Link from 'next/link'
 import EmptyState from '@/components/ui/EmptyState'
 import { FAQSection, CTASection } from '@/components/faq'
@@ -39,10 +39,10 @@ export default async function FAQPage() {
     return (
       <EmptyState
         title="FAQ page content not found."
-        description="Please create it in Sanity Studio."
+        description="Frequently asked questions are being prepared."
         action={
-          <Link href="/studio" className="ui-btn-primary">
-            Go to Sanity Studio
+          <Link href="/contact" className="ui-btn-primary">
+            Return to the FAQ page
           </Link>
         }
       />

@@ -1,5 +1,5 @@
-﻿import type { Metadata } from 'next'
-import SanityCoreValuesPage from '@/components/SanityCoreValuesPage'
+import type { Metadata } from 'next'
+import ContentCoreValuesPage from '@/components/ContentCoreValuesPage'
 
 export const metadata: Metadata = {
   title: 'Soul Care — Core Pillars',
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function CoreValuesPage() {
-  return <SanityCoreValuesPage />
+  return <ContentCoreValuesPage />
 }

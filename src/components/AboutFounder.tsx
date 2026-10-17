@@ -46,7 +46,7 @@ export default function AboutFounder() {
               </p>
               <p>
                 She believes that everyone deserves access to quality mental health support that
-                respects their whole self—mind, body, and spirit.
+                respects their whole selfâ€”mind, body, and spirit.
               </p>
             </div>
 

@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
-import { getBlogPosts, getFeaturedBlogPosts } from '@/lib/sanity-queries'
+import { getBlogPosts, getFeaturedBlogPosts } from '@/lib/content-queries'
 import NotesClient from './NotesClient'
 import LoadingState from '@/components/ui/LoadingState'
 
-// ISR with tag revalidation for Sanity-driven content
+// ISR with tag revalidation for Content-driven content
 export const revalidate = 300
 
 // This is now a Server Component that fetches data on the server

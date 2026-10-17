@@ -1,5 +1,3 @@
-import { createClient } from 'next-sanity'
-import { createHash } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
 // Simple in-memory rate limiter
@@ -35,17 +33,34 @@ function checkRateLimit(key: string): { allowed: boolean; retryAfter?: number } 
   return { allowed: true }
 }
 
-const sanityWriteClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-09-05',
-  useCdn: false,
-  token: process.env.SANITY_API_TOKEN,
-  perspective: 'published',
-})
-
 function normalizeEmail(email: string): string {
   return email.trim().toLowerCase()
+}
+
+async function supabaseRequest<T>(path: string, init?: RequestInit): Promise<T> {
+  const url = process.env.SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!url || !serviceRoleKey) throw new Error('Supabase is not configured.')
+
+  const response = await fetch(`${url.replace(/\/$/, '')}/rest/v1/${path}`, {
+    ...init,
+    headers: {
+      apikey: serviceRoleKey,
+      Authorization: `Bearer ${serviceRoleKey}`,
+      'Content-Type': 'application/json',
+      ...(init?.headers || {}),
+    },
+    cache: 'no-store',
+  })
+
+  if (!response.ok) {
+    const details = await response.text().catch(() => '')
+    throw new Error(`Supabase request failed (${response.status}): ${details}`)
+  }
+
+  if (response.status === 204) return undefined as T
+  return response.json() as Promise<T>
 }
 
 function isValidEmail(email: string): boolean {
@@ -86,7 +101,7 @@ async function syncMailerLiteSubscriber(email: string, firstName: string, groupI
 
 export async function POST(request: NextRequest) {
   try {
-    if (!process.env.SANITY_API_TOKEN) {
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
       return NextResponse.json({ message: 'Waitlist service is not configured.' }, { status: 500 })
     }
 
@@ -111,44 +126,24 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const idSuffix = createHash('sha256').update(email).digest('hex').slice(0, 24)
-    const docId = `waitlistSignup.${idSuffix}`
     const now = new Date().toISOString()
 
-    const existing = await sanityWriteClient.fetch<{ _id: string } | null>(
-      `*[_id == $id][0]{ _id }`,
-      { id: docId }
+    const existing = await supabaseRequest<Array<{ id: string; submitted_count: number }>>(
+      `waitlist_signups?select=id,submitted_count&email=eq.${encodeURIComponent(email)}&limit=1`
     )
-
-    const transaction = sanityWriteClient.transaction()
-    transaction.createIfNotExists({
-      _id: docId,
-      _type: 'waitlistSignup',
-      email,
-      firstName,
-      source,
-      status: 'active',
-      createdAt: now,
-      submittedCount: 0,
+    await supabaseRequest('waitlist_signups?on_conflict=email', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({
+        email,
+        first_name: firstName || null,
+        source,
+        status: 'active',
+        last_submitted_at: now,
+        user_agent: request.headers.get('user-agent') || null,
+        submitted_count: (existing[0]?.submitted_count ?? 0) + 1,
+      }),
     })
-
-    transaction.patch(docId, (patch) =>
-      patch
-        .setIfMissing({
-          source,
-          status: 'active',
-          createdAt: now,
-          submittedCount: 0,
-        })
-        .set({
-          firstName: firstName || undefined,
-          lastSubmittedAt: now,
-          userAgent: request.headers.get('user-agent') || undefined,
-        })
-        .inc({ submittedCount: 1 })
-    )
-
-    await transaction.commit()
     const groupId =
       source === 'shop'
         ? process.env.MAILERLITE_SHOP_GROUP_ID || process.env.MAILERLITE_GROUP_ID!
@@ -159,9 +154,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      alreadyRegistered: Boolean(existing),
+      alreadyRegistered: existing.length > 0,
       mailerLiteSynced,
-      message: existing
+      message: existing.length > 0
         ? 'You are already subscribed. We updated your latest signup.'
         : 'Thanks for subscribing. Please check your inbox for your next resource.',
     })

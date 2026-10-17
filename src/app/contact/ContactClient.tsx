@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
-import type { ContactPage } from '@/lib/sanity'
+import type { ContactPage } from '@/lib/content'
 
 import ConsultationCta from '@/components/cta/ConsultationCta'
 

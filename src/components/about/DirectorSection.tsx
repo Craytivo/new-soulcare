@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, Quote } from 'lucide-react'
-import { urlForImage } from '@/lib/sanity'
+import { urlForImage } from '@/lib/content'
 import { useState, useEffect, useRef } from 'react'
 
-interface SanityImage {
+interface ContentImage {
   _type: 'image'
   asset: {
     _ref: string
@@ -19,12 +19,12 @@ interface DirectorSectionProps {
   name: string
   credentials?: string
   badge?: string
-  image?: SanityImage
+  image?: ContentImage
   description: string
   quote?: string
   bookingLink?: string
   bookingText?: string
-  psychologyTodayImage?: SanityImage
+  psychologyTodayImage?: ContentImage
   psychologyTodayLink?: string
   slug?: string
 }

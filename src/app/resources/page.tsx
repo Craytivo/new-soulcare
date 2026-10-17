@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
 }
 
-import { getResources, getFeaturedResources } from '@/lib/sanity-queries'
+import { getResources, getFeaturedResources } from '@/lib/content-queries'
 import ResourcesClient from '@/components/resources/ResourcesClient'
 import ConsultationCta from '@/components/cta/ConsultationCta'
 import ResourceLeadForm from '@/components/forms/ResourceLeadForm'
@@ -247,7 +247,7 @@ export default async function ResourcesPage() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                Unsubscribe anytime—no spam
+                Unsubscribe anytimeâ€”no spam
               </li>
             </ul>
           </div>

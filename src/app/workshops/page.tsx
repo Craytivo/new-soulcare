@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 export const revalidate = 300
-import SanityWorkshops from '@/components/SanityWorkshops'
+import ContentWorkshops from '@/components/ContentWorkshops'
 
 export const metadata: Metadata = {
-  title: 'Wellness Webinars — Soul Care Counselling',
+  title: 'Wellness Webinars â€” Soul Care Counselling',
   description:
     'Find recordings of our free monthly wellness webinars, packed with valuable insights and practical tips from our dedicated therapists.',
 }
@@ -33,8 +33,8 @@ export default function WorkshopsPage() {
         </div>
       </section>
 
-      {/* Workshops from Sanity */}
-      <SanityWorkshops />
+      {/* Workshops from Content */}
+      <ContentWorkshops />
 
       {/* YouTube Playlist Section */}
       <section className="mt-16 rounded-2xl bg-sand p-6 ring-1 ring-charcoal/10 md:p-8">

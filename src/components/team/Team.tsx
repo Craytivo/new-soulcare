@@ -5,7 +5,7 @@ import type { TypedObject } from '@portabletext/types'
 import PortableText from '@/components/PortableText'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getTeamMembers } from '@/lib/sanity-queries'
+import { getTeamMembers } from '@/lib/content-queries'
 import { extractBioText } from '@/lib/portable-text'
 
 interface TeamMember {
@@ -172,7 +172,7 @@ export default function Team() {
                   <Image
                     src={
                       member.image && member.image.asset
-                        ? `/api/sanity-image?imageId=${member.image.asset._ref}`
+                        ? `/api/content-image?imageId=${member.image.asset._ref}`
                         : '/assets/img/team/placeholder.webp'
                     }
                     alt={member.name}

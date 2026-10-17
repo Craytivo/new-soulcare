@@ -1,7 +1,7 @@
 'use client'
 
-import { Resource } from '@/lib/sanity'
-import { urlFor } from '@/lib/sanity'
+import { Resource } from '@/lib/content'
+import { urlFor } from '@/lib/content'
 import Image from 'next/image'
 import GatedDownloadButton from './GatedDownloadButton'
 

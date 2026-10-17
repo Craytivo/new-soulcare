@@ -11,11 +11,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'cdn.sanity.io',
+        hostname: 'img.youtube.com',
       },
       {
         protocol: 'https',
-        hostname: 'img.youtube.com',
+        hostname: '*.supabase.co',
       },
     ],
     formats: ['image/webp', 'image/avif'],

@@ -1,5 +1,5 @@
 import { Globe2, GraduationCap, LockKeyhole, MapPin, ShieldCheck } from 'lucide-react'
-import type { HomePage } from '@/lib/sanity'
+import type { HomePage } from '@/lib/content'
 
 interface HeroContentProps {
   homePageData: HomePage | null

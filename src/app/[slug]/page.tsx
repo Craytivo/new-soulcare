@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
-import { getTeamMember } from '@/lib/sanity-queries'
-import { urlForImage } from '@/lib/sanity'
+import { getTeamMember } from '@/lib/content-queries'
+import { urlForImage } from '@/lib/content'
 import TeamMemberPage from '@/components/team/TeamMemberPage'
 
 interface TeamMemberPageProps {
@@ -17,7 +17,7 @@ export default async function TeamMemberRoute({ params }: TeamMemberPageProps) {
     notFound()
   }
 
-  // Convert Sanity types to component types
+  // Convert Content types to component types
   const memberData = {
     ...member,
     image: member.image ? urlForImage(member.image, { fit: 'crop' }).url() : '',

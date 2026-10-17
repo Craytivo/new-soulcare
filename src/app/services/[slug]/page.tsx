@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import SanityServicePage from '@/components/SanityServicePage'
-import { getServicePage } from '@/lib/sanity-queries'
+import ContentServicePage from '@/components/ContentServicePage'
+import { getServicePage } from '@/lib/content-queries'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -22,5 +22,5 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ServicePage({ params }: PageProps) {
   const { slug } = await params
-  return <SanityServicePage slug={slug} />
+  return <ContentServicePage slug={slug} />
 }

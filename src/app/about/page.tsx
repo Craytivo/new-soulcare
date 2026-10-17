@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import SanityAboutPage from '@/components/SanityAboutPage'
+import ContentAboutPage from '@/components/ContentAboutPage'
 
 export const metadata: Metadata = {
   title: 'Soul Care - About Us',
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function AboutPage() {
-  return <SanityAboutPage />
+  return <ContentAboutPage />
 }

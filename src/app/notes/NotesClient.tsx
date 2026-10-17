@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { urlFor } from '@/lib/sanity'
-import type { BlogPost } from '@/lib/sanity'
+import { urlFor } from '@/lib/content'
+import type { BlogPost } from '@/lib/content'
 
 const categories = [
   'All Posts',
@@ -20,7 +20,7 @@ const categories = [
   'Community',
 ]
 
-// Map Sanity categories to display categories
+// Map Content categories to display categories
 const categoryMap: Record<string, string> = {
   'mental-health': 'Mental Health',
   'trauma-healing': 'Trauma & Healing',
@@ -69,8 +69,8 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
     if (selectedCategory === 'All Posts') {
       setFilteredPosts(allPosts)
     } else {
-      const sanityCategory = reverseCategoryMap[selectedCategory]
-      setFilteredPosts(allPosts.filter((post) => post.category === sanityCategory))
+      const contentCategory = reverseCategoryMap[selectedCategory]
+      setFilteredPosts(allPosts.filter((post) => post.category === contentCategory))
     }
   }, [selectedCategory, allPosts])
 
@@ -264,7 +264,7 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <h2 className="font-heading text-2xl font-semibold">Latest Posts</h2>
           <p className="text-sm text-charcoal/65">
-            {selectedCategory === 'All Posts' ? 'All categories' : selectedCategory} ·{' '}
+            {selectedCategory === 'All Posts' ? 'All categories' : selectedCategory} Â·{' '}
             {latestNonFeatured.length} posts
           </p>
         </div>

@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import Hero from '../components/Hero'
 import HeroContent from '../components/home/HeroContent'
-import SanityTeamClient from '../components/SanityTeamClient'
-import type { TeamMember, HomePage, Services } from '@/lib/sanity'
+import ContentTeamClient from '../components/ContentTeamClient'
+import type { TeamMember, HomePage, Services } from '@/lib/content'
 
 interface HomeClientProps {
   teamMembers: TeamMember[]
@@ -100,7 +100,7 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
 
       <section className="bg-cream">
         <div className="mx-auto max-w-7xl px-6 pb-14 pt-4 sm:px-8 md:px-10 md:pb-16 md:pt-6 lg:pb-20 xl:px-12">
-          <SanityTeamClient teamMembers={teamMembers} featured />
+          <ContentTeamClient teamMembers={teamMembers} featured />
         </div>
       </section>
     </div>

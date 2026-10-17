@@ -1,5 +1,5 @@
 /**
- * Helper to extract plain text from Portable Text (Sanity rich text) blocks
+ * Helper to extract plain text from Portable Text (Content rich text) blocks
  */
 
 interface PortableTextBlock {

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getInternApplicationPage } from '@/lib/sanity-queries'
+import { getInternApplicationPage } from '@/lib/content-queries'
 import InternApplicationForm from '@/components/InternApplicationForm'
 import Link from 'next/link'
 import EmptyState from '@/components/ui/EmptyState'
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-// ISR with tag revalidation for Sanity-driven content
+// ISR with tag revalidation for Content-driven content
 export const revalidate = 300
 
 export default async function InternApplicationPage() {
@@ -28,10 +28,10 @@ export default async function InternApplicationPage() {
     return (
       <EmptyState
         title="Intern application page content not found."
-        description="Please create it in Sanity Studio."
+        description="The application information is being prepared."
         action={
-          <Link href="/studio" className="ui-btn-primary">
-            Go to Sanity Studio
+          <Link href="/contact" className="ui-btn-primary">
+            Return to the application page
           </Link>
         }
       />

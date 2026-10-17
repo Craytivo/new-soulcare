@@ -1,5 +1,5 @@
 export const revalidate = 300
-import { getTeamMembers, getHomePage, getServices } from '../lib/sanity-queries'
+import { getTeamMembers, getHomePage, getServices } from '../lib/content-queries'
 import HomeClient from './HomeClient'
 
 export default async function Home() {

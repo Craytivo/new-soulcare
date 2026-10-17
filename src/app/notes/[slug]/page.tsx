@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
-import { getBlogPost, getBlogPosts } from '@/lib/sanity-queries'
-import { urlFor } from '@/lib/sanity'
+import { getBlogPost, getBlogPosts } from '@/lib/content-queries'
+import { urlFor } from '@/lib/content'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -53,7 +53,7 @@ export async function generateStaticParams() {
   }))
 }
 
-// Map Sanity categories to display categories
+// Map Content categories to display categories
 const categoryMap: Record<string, string> = {
   'trauma-healing': 'Trauma & Healing',
   'faith-spirituality': 'Spiritual Care',

@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { urlFor } from '@/lib/sanity'
-import type { HomePage } from '@/lib/sanity'
+import { urlFor } from '@/lib/content'
+import type { HomePage } from '@/lib/content'
 
 interface HeroProps {
   homePageData: HomePage | null
@@ -58,13 +58,9 @@ export default function Hero({ homePageData }: HeroProps) {
     return (
       <section className="flex min-h-[60svh] items-center justify-center bg-gradient-to-br from-sand to-cream px-5 text-center">
         <div className="text-bark/70">
-          <p className="text-lg font-semibold">Please create homepage content in Sanity Studio</p>
+          <p className="text-lg font-semibold">Homepage content is being prepared</p>
           <p className="mt-2 text-sm">
-            Visit{' '}
-            <Link href="/studio" className="text-bark underline underline-offset-4">
-              Sanity Studio
-            </Link>{' '}
-            to add homepage content
+            Please check back soon for updates.
           </p>
         </div>
       </section>

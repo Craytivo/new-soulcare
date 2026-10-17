@@ -119,7 +119,7 @@ export default function ReadyToHealCTA({
 
           {/* Trust statement */}
           <p className="mt-8 text-sm font-medium tracking-wide text-charcoal/60">
-            💙 Your wellbeing is our priority. Every session is confidential and tailored to you.
+            ðŸ’™ Your wellbeing is our priority. Every session is confidential and tailored to you.
           </p>
         </div>
       </div>

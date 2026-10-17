@@ -6,17 +6,14 @@
     "src/app/**/route.ts",
     "src/app/sitemap.ts",
     "src/app/robots.ts",
-    "next.config.js",
-    "sanity.config.ts",
-    "sanity.cli.ts"
+    "next.config.js"
   ],
   "project": ["src/**/*.{ts,tsx}"],
   "ignore": [
-    "src/lib/sanity.ts",
-    "src/lib/sanity.types.ts",
+    "src/lib/content.ts",
     "src/components/AboutFounder.tsx",
     "src/components/PortableText.tsx",
-    "src/components/SanityTeam.tsx",
+    "src/components/ContentTeam.tsx",
     "src/components/Skeleton.tsx",
     "src/components/Team.tsx",
     "src/components/TeamMemberPage.tsx"

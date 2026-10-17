@@ -183,7 +183,7 @@ export default function NextStepCTA({
             {/* Trust message */}
             <div className="mt-12 border-t border-charcoal/10 pt-10">
               <p className="text-center text-sm font-medium tracking-wide text-charcoal/60">
-                💙 Every step matters. We&apos;re here to meet you with compassion and expertise.
+                ðŸ’™ Every step matters. We&apos;re here to meet you with compassion and expertise.
               </p>
             </div>
           </div>

@@ -120,7 +120,7 @@ export default function ThankYouPage() {
               <Home className="h-4 w-4 text-clay" />
               Return Home
             </Link>
-            <span className="text-charcoal/30">•</span>
+            <span className="text-charcoal/30">â€¢</span>
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 rounded-lg bg-white/80 px-4 py-2 text-charcoal transition-colors hover:bg-white hover:text-charcoal"

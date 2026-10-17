@@ -1,7 +1,7 @@
 'use client'
-import SanityTeamClient from '@/components/SanityTeamClient'
-import type { TeamMember } from '@/lib/sanity'
+import ContentTeamClient from '@/components/ContentTeamClient'
+import type { TeamMember } from '@/lib/content'
 
 export default function AboutTeamClient({ teamMembers }: { teamMembers: TeamMember[] }) {
-  return <SanityTeamClient teamMembers={teamMembers} />
+  return <ContentTeamClient teamMembers={teamMembers} />
 }

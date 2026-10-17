@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const revalidate = 300
-import SanityServices from '@/components/SanityServices'
-import { getServicesPage } from '@/lib/sanity-queries'
+import ContentServices from '@/components/ContentServices'
+import { getServicesPage } from '@/lib/content-queries'
 import Link from 'next/link'
 import EmptyState from '@/components/ui/EmptyState'
 import ConsultationCta from '@/components/cta/ConsultationCta'
@@ -21,10 +21,10 @@ export default async function ServicesPage() {
     return (
       <EmptyState
         title="Services page content not found."
-        description="Please create it in Sanity Studio."
+        description="Service information is being prepared."
         action={
-          <Link href="/studio" className="ui-btn-primary">
-            Go to Sanity Studio
+          <Link href="/contact" className="ui-btn-primary">
+            Return to the services page
           </Link>
         }
       />
@@ -81,8 +81,8 @@ export default async function ServicesPage() {
         </p>
       </section>
 
-      {/* Services from Sanity */}
-      <SanityServices servicesData={servicesPageData} />
+      {/* Services from Content */}
+      <ContentServices servicesData={servicesPageData} />
 
       {/* Section Divider */}
       <div className="section-divider" />

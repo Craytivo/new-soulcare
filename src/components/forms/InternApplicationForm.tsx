@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import type { InternApplicationPage } from '@/lib/sanity'
+import type { InternApplicationPage } from '@/lib/content'
 
 interface InternApplicationFormProps {
   pageData: InternApplicationPage
@@ -32,7 +32,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
     if (animateIn) closeBtnRef.current?.focus()
   }, [animateIn])
 
-  // Netlify Forms handles submission automatically
+      // Submission is handled by the Next.js API route.
 
   // Render form field based on type
   const renderFormField = (question: InternApplicationPage['formFields']['formQuestions'][0]) => {
@@ -177,7 +177,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
         className="hidden"
         aria-hidden="true"
       />
-      {/* Dynamic form fields from Sanity */}
+      {/* Dynamic form fields from Supabase content */}
       <div className="space-y-4">
         {pageData.formFields.formQuestions.map((question) => (
           <div key={question._key} className={question.fieldType === 'checkbox' ? '' : 'space-y-1'}>
