@@ -16,11 +16,28 @@ class ContentImageBuilder {
     this.imageUrl = getImageUrl(source)
   }
 
-  width(value: number) { this.imageUrl = addImageParam(this.imageUrl, 'width', value); return this }
-  height(value: number) { this.imageUrl = addImageParam(this.imageUrl, 'height', value); return this }
-  fit(value: string) { this.imageUrl = addImageParam(this.imageUrl, 'fit', value); return this }
-  auto() { return this }
-  url() { return this.imageUrl }
+  width(value: number) {
+    this.imageUrl = addImageParam(this.imageUrl, 'width', value)
+    return this
+  }
+  height(value: number) {
+    this.imageUrl = addImageParam(this.imageUrl, 'height', value)
+    return this
+  }
+  fit(value: string) {
+    this.imageUrl = addImageParam(this.imageUrl, 'fit', value)
+    return this
+  }
+  quality(value: number) {
+    this.imageUrl = addImageParam(this.imageUrl, 'quality', value)
+    return this
+  }
+  auto() {
+    return this
+  }
+  url() {
+    return this.imageUrl
+  }
 }
 
 function getImageUrl(source: ContentImageSource): string {
@@ -35,7 +52,11 @@ function addImageParam(url: string, key: string, value: number | string) {
   return `${url}${url.includes('?') ? '&' : '?'}${key}=${encodeURIComponent(value)}`
 }
 
-export async function contentFetch<T>({ query, params = {}, revalidate = 300 }: ContentFetchOptions) {
+export async function contentFetch<T>({
+  query,
+  params = {},
+  revalidate = 300,
+}: ContentFetchOptions) {
   const url = process.env.SUPABASE_URL
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!url || !anonKey) throw new Error('Supabase content is not configured.')
@@ -44,7 +65,12 @@ export async function contentFetch<T>({ query, params = {}, revalidate = 300 }: 
   const contentType = typeMatch?.[1]
   if (!contentType) throw new Error('Content query is missing a content type.')
 
-  const search = new URLSearchParams({ select: 'data', content_type: `eq.${contentType}`, published_at: 'not.is.null', order: 'updated_at.desc' })
+  const search = new URLSearchParams({
+    select: 'data',
+    content_type: `eq.${contentType}`,
+    published_at: 'not.is.null',
+    order: 'updated_at.desc',
+  })
   if (typeof params.slug === 'string') search.set('slug', `eq.${params.slug}`)
 
   const response = await fetch(`${url.replace(/\/$/, '')}/rest/v1/content_documents?${search}`, {
@@ -59,7 +85,9 @@ export async function contentFetch<T>({ query, params = {}, revalidate = 300 }: 
     values = values.filter((value) => (value as { category?: string }).category === params.category)
   }
   if (typeof params.tag === 'string') {
-    values = values.filter((value) => (value as { tags?: string[] }).tags?.includes(params.tag as string))
+    values = values.filter((value) =>
+      (value as { tags?: string[] }).tags?.includes(params.tag as string)
+    )
   }
   if (query.includes('isFeatured == true')) {
     values = values.filter((value) => (value as { isFeatured?: boolean }).isFeatured === true)
@@ -73,9 +101,14 @@ export async function contentFetch<T>({ query, params = {}, revalidate = 300 }: 
   return (query.includes('[0]') ? (values[0] ?? null) : values) as T
 }
 
-export function urlFor(source: ContentImageSource) { return new ContentImageBuilder(source) }
+export function urlFor(source: ContentImageSource) {
+  return new ContentImageBuilder(source)
+}
 
-export function urlForImage(source: ContentImageSource, options?: { width?: number; height?: number; fit?: string }) {
+export function urlForImage(
+  source: ContentImageSource,
+  options?: { width?: number; height?: number; fit?: string }
+) {
   let image = new ContentImageBuilder(source)
   if (options?.width) image = image.width(options.width)
   if (options?.height) image = image.height(options.height)

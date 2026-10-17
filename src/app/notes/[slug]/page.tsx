@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getBlogPost, getBlogPosts } from '@/lib/content-queries'
-import { urlFor } from '@/lib/content'
+import { urlFor, type ContentImageSource } from '@/lib/content'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -70,7 +70,7 @@ const categoryMap: Record<string, string> = {
 // Custom components for PortableText
 const portableTextComponents = {
   types: {
-    image: ({ value }: { value: { alt?: string; caption?: string } }) => (
+    image: ({ value }: { value: ContentImageSource & { alt?: string; caption?: string } }) => (
       <div className="my-8">
         <Image
           src={urlFor(value).width(800).url()}

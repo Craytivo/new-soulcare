@@ -11,6 +11,8 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "migrate:content": "node scripts/migrate-content-export.mjs",
+    "organize:content": "node scripts/organize-supabase-content.mjs",
     "knip": "knip",
     "validate": "npm run lint && npm run type-check && npm run format:check",
     "validate:full": "npm run lint && npm run type-check && npm run format:check && npm run knip",

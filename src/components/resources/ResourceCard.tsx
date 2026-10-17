@@ -52,7 +52,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
       {resource.previewImage?.asset && (
         <div className="w-full">
           <Image
-            src={urlFor(resource.previewImage).width(600).height(450).auto('format').url()}
+            src={urlFor(resource.previewImage).width(600).height(450).auto().url()}
             alt={getResourceImageAlt(resource)}
             width={600}
             height={450}

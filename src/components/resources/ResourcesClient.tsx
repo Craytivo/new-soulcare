@@ -63,7 +63,7 @@ function InlineResourceCard({ resource }: { resource: Resource }) {
         {resource.previewImage?.asset ? (
           <>
             <Image
-              src={urlFor(resource.previewImage).width(600).height(450).auto('format').url()}
+              src={urlFor(resource.previewImage).width(600).height(450).auto().url()}
               alt={getResourceImageAlt(resource)}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -190,7 +190,7 @@ function FeaturedResourceCard({ resource }: FeaturedResourceCardProps) {
         {resource.previewImage?.asset && (
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-sand/30 md:aspect-[4/3]">
             <Image
-              src={urlFor(resource.previewImage).width(800).height(600).auto('format').url()}
+              src={urlFor(resource.previewImage).width(800).height(600).auto().url()}
               alt={getResourceImageAlt(resource)}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
