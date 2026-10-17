@@ -1,5 +1,5 @@
 import { getAboutPage } from '@/lib/content-queries'
-import { urlFor } from '@/lib/content'
+import { urlFor, type AboutPage } from '@/lib/content'
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,6 +7,17 @@ import AboutTeamClient from '@/components/AboutTeamClient'
 import DirectorSection from '@/components/about/DirectorSection'
 import NextStepCTA from '@/components/about/NextStepCTA'
 import { getTeamMembers } from '@/lib/content-queries'
+
+function getHeroImagePosition(
+  image: NonNullable<NonNullable<AboutPage['hero']['backgroundImage']>>
+) {
+  const hotspot = image.hotspot
+  if (hotspot && typeof hotspot.x === 'number' && typeof hotspot.y === 'number') {
+    return `${hotspot.x * 100}% ${hotspot.y * 100}%`
+  }
+
+  return '50% 22%'
+}
 
 export default async function ContentAboutPage() {
   const pageData = await getAboutPage()
@@ -61,62 +72,71 @@ export default async function ContentAboutPage() {
 
   return (
     <div className="-mx-4 -my-12 bg-cream">
-      {/* HERO SECTION - Full bleed dark background */}
-      <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden bg-charcoal text-white">
-        {/* Background image with overlay */}
+      {/* Homepage-aligned hero: full-bleed image, bottom gradient, and compact text system. */}
+      <section className="relative left-1/2 right-1/2 isolate -ml-[50vw] -mr-[50vw] w-screen overflow-hidden bg-charcoal text-white lg:flex lg:min-h-[min(62vw,calc(100svh-5rem))] lg:items-end">
         {pageData.hero.backgroundImage && (
-          <Image
-            src={urlFor(pageData.hero.backgroundImage).width(2200).height(1400).quality(92).url()}
-            alt={pageData.hero.backgroundImage.alt || pageData.hero.title}
-            fill
-            priority
-            className="object-cover"
-            style={{ objectPosition: '50% 0%' }}
-          />
+          <div className="relative aspect-[124/77] w-full lg:absolute lg:inset-0 lg:-z-20 lg:aspect-auto">
+            <Image
+              src={urlFor(pageData.hero.backgroundImage).width(2200).height(1400).quality(92).url()}
+              alt={pageData.hero.backgroundImage.alt || pageData.hero.title}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              style={{ objectPosition: getHeroImagePosition(pageData.hero.backgroundImage) }}
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-b from-transparent from-55% to-charcoal lg:from-transparent lg:from-45% lg:via-charcoal/55 lg:via-70% lg:to-charcoal"
+            />
+          </div>
         )}
-        {/* Content */}
-        <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-end px-5 pb-20 pt-24 sm:min-h-[72vh] sm:px-8 lg:min-h-[min(820px,90vh)] lg:px-10 lg:pb-28">
-          <div className="max-w-3xl">
-            {pageData.hero.badge && (
-              <div className="border-white/18 bg-white/12 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cream backdrop-blur-md">
-                {pageData.hero.badge}
-              </div>
-            )}
 
-            {/* Localized contrast background for hero text only; the image itself stays undarkened. */}
-            <div className="mt-5 inline-block max-w-3xl rounded-[4px] bg-[rgba(37,35,31,0.65)] px-4 py-3.5 sm:px-6 sm:py-5">
-              <h1 className="text-balance font-heading text-4xl font-bold leading-[1.04] text-white sm:text-5xl lg:text-6xl">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-14 lg:px-12 lg:pb-10 lg:pt-0 xl:pb-12">
+          <div className="lg:grid lg:grid-cols-12 lg:items-end lg:gap-10 xl:gap-14">
+            <div className="lg:col-span-6 xl:col-span-7">
+              {pageData.hero.badge && (
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-sm">
+                  {pageData.hero.badge}
+                </p>
+              )}
+              <h1 className="max-w-4xl text-balance font-heading text-4xl font-semibold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[2.6rem] xl:text-5xl">
                 {pageData.hero.title}
               </h1>
-
-              <p className="mt-5 max-w-2xl text-base leading-7 text-cream sm:text-lg">
-                {pageData.hero.description}
-              </p>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/contact"
-                className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-cream ring-1 ring-clay/40 transition shadow-elevation-2 hover:bg-bark hover:shadow-elevation-3 sm:w-auto"
-              >
-                Book a Consultation
-                <svg
-                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
+            <div className="mt-6 lg:col-span-6 lg:mt-0 xl:col-span-5">
+              <p className="max-w-xl text-base leading-7 text-white/90 [text-shadow:0_1px_10px_rgba(0,0,0,0.35)] sm:text-lg">
+                {pageData.hero.description}
+              </p>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/contact"
+                  className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-clay px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-bark sm:w-auto"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:border-white/50 hover:bg-white/20 sm:w-auto"
-              >
-                Get in Touch
-              </Link>
+                  Book a Consultation
+                  <svg
+                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/70 bg-charcoal/20 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15 sm:w-auto"
+                >
+                  Get in Touch
+                </Link>
+              </div>
             </div>
           </div>
         </div>
