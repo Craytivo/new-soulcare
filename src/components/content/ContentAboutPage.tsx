@@ -143,7 +143,7 @@ export default async function ContentAboutPage() {
       </section>
 
       {/* Main content container - matches homepage structure */}
-      <section className="relative z-20 -mt-14 rounded-t-[2rem] border-t border-white/70 bg-cream shadow-[0_-22px_55px_rgba(35,32,27,0.16)] sm:-mt-16 sm:rounded-t-[2.5rem] lg:-mt-20">
+      <section className="relative z-20 mt-0 rounded-t-[2rem] border-t border-white/70 bg-cream shadow-[0_-18px_45px_rgba(35,32,27,0.12)] sm:rounded-t-[2.5rem]">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-clay/35 to-transparent" />
 
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-5 sm:py-10 md:px-10 md:py-12 lg:py-16 xl:px-12">
