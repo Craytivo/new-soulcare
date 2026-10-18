@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getTeamMember, getTeamMembers } from '@/lib/content-queries'
 import { urlForImage } from '@/lib/content'
+import { getLocalTeamImage } from '@/lib/team-images'
 import TeamMemberPage from '@/components/team/TeamMemberPage'
 
 interface TeamMemberPageProps {
@@ -28,13 +29,19 @@ export default async function TeamMemberRoute({ params }: TeamMemberPageProps) {
   // Convert Content types to component types
   const memberData = {
     ...member,
-    image: member.image ? urlForImage(member.image, { fit: 'crop' }).url() : '',
-    heroImage: member.image
-      ? urlForImage(member.image, { width: 1200, height: 600, fit: 'crop' }).url()
-      : '',
-    portraitImage: member.image
-      ? urlForImage(member.image, { width: 365, height: 365, fit: 'crop' }).url()
-      : '',
+    image:
+      getLocalTeamImage(member) ??
+      (member.image ? urlForImage(member.image, { fit: 'crop' }).url() : ''),
+    heroImage:
+      getLocalTeamImage(member) ??
+      (member.image
+        ? urlForImage(member.image, { width: 1200, height: 600, fit: 'crop' }).url()
+        : ''),
+    portraitImage:
+      getLocalTeamImage(member) ??
+      (member.image
+        ? urlForImage(member.image, { width: 365, height: 365, fit: 'crop' }).url()
+        : ''),
     bio: member.bio as unknown[],
     specialties: member.specialties || [],
     areasOfFocus: member.areasOfFocus || [],

@@ -87,6 +87,12 @@ const teamMemberProjection = `{
   bio,
   specialties,
   areasOfFocus,
+  bestFitFor,
+  clientTypes,
+  languages,
+  sessionFormats,
+  virtualAvailable,
+  inPersonAvailable,
   socialLinks,
   acceptsBookings,
   slug

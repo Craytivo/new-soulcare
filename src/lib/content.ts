@@ -148,6 +148,12 @@ export interface TeamMember {
   bio: unknown[]
   specialties?: string[]
   areasOfFocus?: string[]
+  bestFitFor?: string
+  clientTypes?: string[]
+  languages?: string[]
+  sessionFormats?: string[]
+  virtualAvailable?: boolean
+  inPersonAvailable?: boolean
   socialLinks?: Array<{
     label: string
     url: string
