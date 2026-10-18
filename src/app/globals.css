@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Build-safe font stacks: no external font metadata is needed at build time. */
 .font-fallbacks {
-  --font-heading: 'Arial', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Arial', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    'Manrope', 'Aptos Display', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'DM Sans', 'Aptos', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
 }
 
 /* ===========================
@@ -231,7 +235,7 @@
 
   /* UI Cards */
   .ui-card {
-    @apply rounded-2xl bg-white shadow-sm ring-1 ring-charcoal/10;
+    @apply rounded-lg bg-white shadow-sm ring-1 ring-charcoal/10;
     background: linear-gradient(
       135deg,
       rgba(255, 255, 255, 0.9) 0%,
@@ -257,7 +261,7 @@
 
   /* Buttons */
   .ui-btn {
-    @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold ring-1 transition-all;
+    @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold tracking-[-0.01em] ring-1 transition-all;
   }
 
   .ui-btn-primary {
@@ -287,6 +291,18 @@
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
+  }
+}
+
+/* A more architectural radius system: preserve circular controls, but keep
+   cards and large surfaces from feeling overly soft or app-like. */
+@layer utilities {
+  .rounded-2xl {
+    border-radius: 1rem;
+  }
+
+  .rounded-3xl {
+    border-radius: 1.25rem;
   }
 }
 

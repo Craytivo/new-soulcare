@@ -1,9 +1,6 @@
 /**
- * Font fallback configuration.
- *
- * Avoids fetching Google Font metadata during the production build, which can
- * fail inside next/font/google when the upstream response cannot be parsed.
- * The CSS variables preserve the existing font-family hooks used by Tailwind
- * and the site's typography styles.
+ * Font configuration for the site's editorial sans-serif system.
+ * The CSS variables preserve the existing Tailwind hooks and fall back cleanly
+ * if the hosted fonts are unavailable.
  */
 export const fontVariables = 'font-fallbacks'
