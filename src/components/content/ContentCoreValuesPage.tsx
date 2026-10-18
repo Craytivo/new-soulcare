@@ -102,7 +102,7 @@ export default async function ContentCoreValuesPage() {
             (value: { title: string; description: string; order: number }, index) => (
               <article
                 key={`${value.order}-${value.title}`}
-                className="group min-h-64 rounded-3xl border border-charcoal/10 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-clay/35 hover:shadow-md md:p-7"
+                className="group min-h-64 border border-charcoal/10 bg-white p-6 transition-colors duration-200 hover:border-clay/40 md:p-7"
               >
                 <div className="flex items-start justify-between gap-4">
                   <span className="font-mono text-xs font-semibold tracking-[0.18em] text-clay/70">
@@ -126,18 +126,20 @@ export default async function ContentCoreValuesPage() {
         </div>
       </section>
 
-      <section className="mx-5 mb-12 rounded-3xl bg-charcoal p-7 text-white shadow-lg sm:mx-8 sm:mb-16 sm:p-10 lg:mx-auto lg:max-w-7xl lg:p-12">
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-clay">
-              A thoughtful next step
-            </p>
-            <h3 className="mt-3 font-heading text-2xl font-semibold sm:text-3xl">
-              {page.cta.title}
-            </h3>
-            <p className="mt-3 leading-7 text-white/75">{page.cta.description}</p>
+      <section className="mx-auto mb-12 max-w-7xl px-5 sm:mb-16 sm:px-8 lg:px-12">
+        <div className="bg-charcoal p-7 text-white sm:p-10 lg:p-12">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                A thoughtful next step
+              </p>
+              <h3 className="mt-3 font-heading text-2xl font-semibold sm:text-3xl">
+                {page.cta.title}
+              </h3>
+              <p className="mt-3 leading-7 text-white/75">{page.cta.description}</p>
+            </div>
+            <div className="shrink-0">{renderCtaButton()}</div>
           </div>
-          <div className="shrink-0">{renderCtaButton()}</div>
         </div>
       </section>
     </div>

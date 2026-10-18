@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-gold/20 bg-white/95 text-bark shadow-lg backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-charcoal/10 bg-cream/95 text-bark backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4">
           {/* LEFT: Brand */}
           <Link href="/" className="flex items-center gap-3">
@@ -94,7 +94,7 @@ export default function Header() {
                   url: 'https://thesoulcarecounsellor.janeapp.com',
                 })
               }
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-clay px-3 py-1.5 text-xs font-semibold text-cream shadow-sm ring-1 ring-clay/50 transition-all hover:bg-clay/90 hover:shadow-md lg:px-4 lg:py-2 lg:text-sm"
+              className="inline-flex min-h-10 items-center justify-center whitespace-nowrap bg-clay px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-bark lg:px-4 lg:text-sm"
             >
               <span className="lg:hidden">Book</span>
               <span className="hidden lg:inline">Book Consultation</span>
@@ -102,7 +102,7 @@ export default function Header() {
             <button
               type="button"
               onClick={toggleMenu}
-              className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ring-1 ring-bark/20 transition-all duration-200 hover:bg-gold/10 hover:ring-gold/40 ${isMenuOpen ? 'scale-110 bg-gold/10 ring-gold/40' : ''}`}
+              className={`inline-flex h-10 w-10 shrink-0 items-center justify-center border border-bark/20 transition-colors duration-200 hover:bg-sand ${isMenuOpen ? 'bg-sand' : ''}`}
               aria-controls="menuPanel"
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}

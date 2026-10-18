@@ -27,9 +27,17 @@ export default async function TeamMemberRoute({ params }: TeamMemberPageProps) {
     portraitImage: member.image
       ? urlForImage(member.image, { width: 365, height: 365, fit: 'crop' }).url()
       : '',
+    secondaryImage: member.secondaryImage
+      ? urlForImage(member.secondaryImage, { width: 900, height: 600, fit: 'crop' }).url()
+      : '',
     bio: member.bio as unknown[],
     specialties: member.specialties || [],
     areasOfFocus: member.areasOfFocus || [],
+    bestFitFor: member.bestFitFor || '',
+    clientTypes: member.clientTypes || [],
+    languages: member.languages || [],
+    sessionFormats: member.sessionFormats || [],
+    approaches: member.approaches || [],
     socialLinks: member.socialLinks || [],
   }
 

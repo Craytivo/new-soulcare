@@ -22,43 +22,9 @@ const linkClass =
 
 export default function Footer() {
   return (
-    <footer className="mt-28 bg-cream text-bark">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
-        <div className="relative overflow-hidden rounded-[1.75rem] bg-charcoal text-cream shadow-[0_24px_70px_rgba(35,32,27,0.18)]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(196,154,108,0.24),transparent_32%),radial-gradient(circle_at_92%_10%,rgba(248,245,236,0.12),transparent_28%)]" />
-          <div className="relative grid gap-8 px-6 py-8 sm:px-8 md:py-10 lg:grid-cols-[1fr_auto] lg:items-end lg:px-10">
-            <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
-                Soul Care Counselling
-              </p>
-              <p className="mt-4 max-w-[18ch] font-heading text-3xl font-semibold leading-[1.08] text-white sm:text-4xl md:max-w-[22ch]">
-                Warm, practical counselling grounded in evidence-based care and Christian faith.
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-              <a
-                href="https://thesoulcarecounsellor.janeapp.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-charcoal transition shadow-elevation-2 hover:bg-sand focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal"
-              >
-                Book a Free Consultation
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
-              <Link
-                href="/contact"
-                className="border-cream/18 bg-white/8 hover:bg-white/12 inline-flex min-h-12 items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold text-cream backdrop-blur transition hover:border-cream/35 focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal"
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <footer className="mt-24 border-t border-charcoal/10 bg-cream text-bark">
       <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 md:py-16 lg:px-10">
-        <div className="border-t border-charcoal/10 pt-12 md:pt-14">
+        <div className="border-t border-charcoal/10 pt-10 md:pt-12">
           <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr] lg:gap-16">
             <div className="max-w-md">
               <Link
@@ -66,13 +32,13 @@ export default function Footer() {
                 className="inline-flex items-center gap-4"
                 aria-label="Soul Care Counselling home"
               >
-                <span className="ring-charcoal/8 flex h-16 w-16 items-center justify-center rounded-2xl bg-white ring-1 shadow-elevation-2">
+                <span className="ring-charcoal/8 flex h-14 w-14 items-center justify-center rounded-xl bg-white ring-1 shadow-elevation-2">
                   <Image
                     src="/assets/logo/logo-s-c-intertwined.png"
                     alt="Soul Care Counselling Logo"
                     width={42}
                     height={42}
-                    className="h-11 w-11 object-contain"
+                    className="h-10 w-10 object-contain"
                   />
                 </span>
                 <span className="max-w-44 font-heading text-lg font-semibold leading-tight text-bark">
@@ -82,6 +48,14 @@ export default function Footer() {
 
               <ul className="mt-7 space-y-2 text-sm leading-6 text-bark/70">
                 <li>Virtual appointments across Canada</li>
+                <li>
+                  <a
+                    href="mailto:info@thesoulcarecounsellor.com"
+                    className="transition hover:text-bark"
+                  >
+                    info@thesoulcarecounsellor.com
+                  </a>
+                </li>
               </ul>
 
               <div className="mt-6 flex flex-wrap gap-3">
@@ -90,7 +64,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Soul Care Instagram profile"
-                  className="text-bark/78 inline-flex min-h-10 items-center gap-2 rounded-lg border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold transition shadow-elevation-1 hover:border-clay/35 hover:text-bark hover:shadow-elevation-2 focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
+                  className="text-bark/78 inline-flex min-h-10 items-center gap-2 border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold transition hover:border-clay/35 hover:text-bark focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
                 >
                   <svg
                     className="h-4 w-4"
@@ -110,7 +84,7 @@ export default function Footer() {
                 </a>
                 <Link
                   href="/contact"
-                  className="text-bark/78 inline-flex min-h-10 items-center rounded-lg border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold transition shadow-elevation-1 hover:border-clay/35 hover:text-bark hover:shadow-elevation-2 focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
+                  className="text-bark/78 inline-flex min-h-10 items-center border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold transition hover:border-clay/35 hover:text-bark focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
                 >
                   Get in touch
                 </Link>
@@ -200,7 +174,7 @@ export default function Footer() {
                     </Link>
                   </li>
                 </ul>
-                <p className="bg-white/72 text-bark/62 mt-7 rounded-2xl border border-charcoal/10 p-4 text-xs leading-6 shadow-elevation-1">
+                <p className="text-bark/62 mt-7 border-l-2 border-clay/60 bg-white/70 p-4 text-xs leading-6">
                   Not for crisis support. If you&apos;re in immediate danger, call 911 or local
                   emergency services.
                 </p>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getFAQPage } from '@/lib/content-queries'
 import Link from 'next/link'
 import EmptyState from '@/components/ui/EmptyState'
+import EditorialPageHero from '@/components/ui/EditorialPageHero'
 import { FAQSection, CTASection } from '@/components/faq'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -78,62 +79,58 @@ export default async function FAQPage() {
   ]
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-
-      {/* Hero */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15 shadow-elevation-3">
-        <div
-          className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"
-          aria-hidden="true"
+    <div className="-mx-4 -my-12 bg-cream text-charcoal">
+      <div className="mx-auto max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:px-12 lg:pt-10">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
-        <div
-          className="absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-gradient-to-tr from-cream/10 to-clay/20 blur-2xl"
-          aria-hidden="true"
-        />
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
-          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 text-[11px] uppercase tracking-[.22em] ring-1 ring-cream/30">
-            {pageData.hero.badge}
-          </span>
-          <h1 className="mt-3 text-balance font-heading text-3xl font-bold leading-tight tracking-tight md:text-4xl">
-            {pageData.hero.heading}
-          </h1>
-          <p className="mt-3 max-w-3xl leading-relaxed text-cream/85">
-            {pageData.hero.description}
-          </p>
-        </div>
-      </section>
 
-      {/* Quick-nav category pills */}
-      <section className="mt-8">
-        <div className="flex flex-wrap gap-2 rounded-2xl p-3 glass">
-          {categories.map((cat) => (
-            <a
-              key={cat}
-              href={`#faq-${cat.toLowerCase()}`}
-              className="rounded-full bg-white px-3 py-1.5 text-sm font-medium text-charcoal/80 ring-1 ring-charcoal/5 transition-all duration-200 hover:ring-charcoal/15"
-            >
-              {cat}
-            </a>
+        <EditorialPageHero
+          eyebrow={pageData.hero.badge}
+          title={pageData.hero.heading}
+          description={pageData.hero.description}
+          aside={
+            <>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+                Frequently asked
+              </p>
+              <p className="mt-3 font-heading text-2xl font-semibold text-white">
+                Clear answers, at your pace.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-white/70">
+                Browse questions about sessions, pricing, and what to expect.
+              </p>
+            </>
+          }
+        />
+
+        {/* Quick-nav category pills */}
+        <section className="mt-8 border-y border-charcoal/10 py-5">
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <a
+                key={cat}
+                href={`#faq-${cat.toLowerCase()}`}
+                className="inline-flex min-h-10 items-center border border-charcoal/10 bg-white px-3 py-2 text-sm font-medium text-charcoal/80 transition hover:border-clay/40 hover:text-bark"
+              >
+                {cat}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ Sections */}
+        <div className="divide-y divide-charcoal/10">
+          {faqGroups.map((group) => (
+            <FAQSection key={group.id} {...group} />
           ))}
         </div>
-      </section>
 
-      {/* FAQ Sections */}
-      {faqGroups.map((group) => (
-        <FAQSection key={group.id} {...group} />
-      ))}
-
-      {/* Section Divider */}
-      <div className="section-divider" />
-
-      {/* CTA */}
-      <div className="mt-16 rounded-2xl shadow-elevation-2">
-        <CTASection icon="question" />
+        <div className="py-10 sm:py-14">
+          <CTASection icon="question" />
+        </div>
       </div>
-    </>
+    </div>
   )
 }

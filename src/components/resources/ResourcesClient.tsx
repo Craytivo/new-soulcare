@@ -55,11 +55,12 @@ const formatFileSize = (bytes: number) => {
 // Inline ResourceCard component with enhanced design
 function InlineResourceCard({ resource }: { resource: Resource }) {
   const isGated = Boolean(resource.requiresEmailGate || isForcedGatedResource(resource))
+  const downloadUrl = resource.pdfFile?.asset?.url
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-white ring-1 ring-charcoal/10 transition-all duration-300 focus-within:shadow-xl focus-within:ring-clay/50 hover:-translate-y-1 hover:shadow-xl hover:ring-clay/30 md:rounded-2xl">
+    <article className="group flex h-full flex-col overflow-hidden border border-charcoal/10 bg-white transition-colors focus-within:border-clay/50 hover:border-clay/40">
       {/* Image Container with Badges */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-sand/30 md:aspect-[4/3]">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-sand/30">
         {resource.previewImage?.asset ? (
           <>
             <Image
@@ -124,25 +125,25 @@ function InlineResourceCard({ resource }: { resource: Resource }) {
         </div>
       </div>
 
-      <div className="flex flex-grow flex-col p-3 md:p-5">
-        <h3 className="mb-1.5 line-clamp-2 font-heading text-base font-semibold leading-tight text-charcoal transition-colors duration-200 group-hover:text-clay md:mb-2 md:text-lg">
+      <div className="flex flex-grow flex-col p-5">
+        <h3 className="mb-2 line-clamp-2 font-heading text-lg font-semibold leading-tight text-bark transition-colors duration-200 group-hover:text-clay">
           {resource.title}
         </h3>
 
         {resource.description && (
-          <p className="mb-3 line-clamp-2 flex-grow text-xs leading-relaxed text-charcoal/70 md:mb-4 md:text-sm">
+          <p className="mb-4 line-clamp-3 flex-grow text-sm leading-6 text-charcoal/70">
             {resource.description}
           </p>
         )}
 
         {/* Footer */}
-        <div className="mt-auto flex items-center justify-between border-t border-charcoal/5 pt-2 md:pt-3">
-          <div className="flex items-center gap-1.5 md:gap-2">
-            <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-clay to-bark shadow-sm md:h-7 md:w-7">
-              <span className="text-[8px] font-bold text-cream md:text-[10px]">SC</span>
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-charcoal/10 pt-4">
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center bg-sand">
+              <span className="text-[10px] font-bold text-bark">SC</span>
             </div>
             {resource.pdfFile?.asset?.size && (
-              <span className="flex items-center gap-0.5 text-[10px] text-charcoal/50 md:gap-1 md:text-xs">
+              <span className="flex items-center gap-1 text-xs text-charcoal/50">
                 <svg
                   className="h-2.5 w-2.5 md:h-3 md:w-3"
                   fill="none"
@@ -161,15 +162,19 @@ function InlineResourceCard({ resource }: { resource: Resource }) {
             )}
           </div>
 
-          {resource.pdfFile?.asset?.url && (
+          {downloadUrl ? (
             <GatedDownloadButton
               requiresEmailGate={isGated}
-              downloadUrl={resource.pdfFile.asset.url}
+              downloadUrl={downloadUrl}
               fileName={resource.pdfFile.asset.originalFilename}
               resourceTitle={resource.title}
               resourceSlug={resource.slug.current}
-              className="inline-flex items-center rounded bg-clay px-2.5 py-1 text-xs font-semibold text-cream shadow-sm transition-all duration-200 hover:scale-105 hover:bg-bark hover:shadow-md focus:outline-none focus:ring-2 focus:ring-clay/50 md:px-3 md:py-1.5 md:text-sm"
+              className="inline-flex min-h-10 shrink-0 items-center bg-clay px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-bark sm:text-sm"
             />
+          ) : (
+            <span className="max-w-28 text-right text-xs leading-4 text-charcoal/45">
+              File temporarily unavailable
+            </span>
           )}
         </div>
       </div>
@@ -183,9 +188,10 @@ interface FeaturedResourceCardProps {
 
 function FeaturedResourceCard({ resource }: FeaturedResourceCardProps) {
   const isGated = Boolean(resource.requiresEmailGate || isForcedGatedResource(resource))
+  const downloadUrl = resource.pdfFile?.asset?.url
 
   return (
-    <div className="group overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-charcoal/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:ring-clay/30 md:rounded-2xl">
+    <div className="group overflow-hidden border border-charcoal/10 bg-white transition-colors hover:border-clay/40">
       <div className="md:grid md:grid-cols-2 md:gap-0">
         {resource.previewImage?.asset && (
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-sand/30 md:aspect-[4/3]">
@@ -254,7 +260,9 @@ function FeaturedResourceCard({ resource }: FeaturedResourceCardProps) {
             </div>
           </div>
         )}
-        <div className={`p-4 md:p-8 ${!resource.previewImage?.asset ? 'md:col-span-2' : ''}`}>
+        <div
+          className={`p-5 sm:p-6 md:p-8 ${!resource.previewImage?.asset ? 'md:col-span-2' : ''}`}
+        >
           <div className="mb-2 flex flex-wrap items-center gap-2 md:mb-3">
             {isGated && (
               <span className="rounded-full bg-bark px-2 py-0.5 text-[10px] font-medium text-cream md:px-3 md:py-1 md:text-xs">
@@ -304,15 +312,17 @@ function FeaturedResourceCard({ resource }: FeaturedResourceCardProps) {
               </div>
             </div>
 
-            {resource.pdfFile?.asset?.url && (
+            {downloadUrl ? (
               <GatedDownloadButton
                 requiresEmailGate={isGated}
-                downloadUrl={resource.pdfFile.asset.url}
+                downloadUrl={downloadUrl}
                 fileName={resource.pdfFile.asset.originalFilename}
                 resourceTitle={resource.title}
                 resourceSlug={resource.slug.current}
-                className="inline-flex w-full items-center justify-center rounded-lg bg-clay px-4 py-2 text-sm font-semibold text-cream shadow-md transition-all duration-200 hover:scale-105 hover:bg-bark hover:shadow-lg sm:w-auto md:px-5 md:py-2.5"
+                className="inline-flex min-h-11 w-full items-center justify-center bg-clay px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-bark sm:w-auto"
               />
+            ) : (
+              <span className="text-xs text-charcoal/45">File temporarily unavailable</span>
             )}
           </div>
         </div>
@@ -401,7 +411,7 @@ export default function ResourcesClient({ allResources, featuredResources }: Res
   return (
     <>
       {/* Search and Filter Header */}
-      <section className="sticky top-0 z-40 -mx-4 border-b border-charcoal/10 bg-cream/95 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 md:-mx-10 md:px-10 md:py-4">
+      <section className="border-y border-charcoal/10 bg-cream py-4">
         {/* Search Bar */}
         <div className="mb-3 md:mb-4">
           <div className="relative max-w-2xl">
@@ -424,8 +434,9 @@ export default function ResourcesClient({ allResources, featuredResources }: Res
               type="text"
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
+              aria-label="Search resources"
               placeholder="Search resources..."
-              className="w-full rounded-xl border border-charcoal/20 bg-white/80 py-2.5 pl-9 pr-10 text-sm text-charcoal placeholder-charcoal/40 backdrop-blur-sm transition-all duration-200 focus:border-clay/50 focus:outline-none focus:ring-2 focus:ring-clay/50 md:py-3 md:text-base"
+              className="w-full border border-charcoal/20 bg-white py-2.5 pl-9 pr-10 text-sm text-charcoal placeholder-charcoal/40 transition-all duration-200 focus:border-clay/50 focus:outline-none focus:ring-2 focus:ring-clay/50 md:py-3 md:text-base"
             />
             {searchQuery && (
               <button
@@ -454,10 +465,10 @@ export default function ResourcesClient({ allResources, featuredResources }: Res
               <button
                 key={category}
                 onClick={() => handleCategoryClick(category)}
-                className={`flex-shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-150 md:px-4 md:py-2 md:text-sm ${
+                className={`flex-shrink-0 whitespace-nowrap border px-3 py-1.5 text-xs font-medium transition-all duration-150 md:px-4 md:py-2 md:text-sm ${
                   category === selectedCategory
-                    ? 'bg-clay text-cream shadow-md ring-1 ring-clay/30 hover:bg-bark'
-                    : 'bg-white text-charcoal/80 ring-1 ring-charcoal/10 hover:bg-sand/50 hover:text-charcoal hover:ring-clay/20'
+                    ? 'border-charcoal bg-charcoal text-white hover:bg-bark'
+                    : 'border-charcoal/10 bg-white text-charcoal/80 hover:border-clay/40 hover:bg-sand/50 hover:text-charcoal'
                 }`}
               >
                 {category}
@@ -541,7 +552,7 @@ export default function ResourcesClient({ allResources, featuredResources }: Res
           {filteredFeaturedResources.length > 0 && (
             <section className="mt-8 md:mt-12">
               <div className="mb-4 flex items-center justify-between md:mb-8">
-                <h2 className="font-heading text-xl font-bold text-charcoal md:text-3xl">
+                <h2 className="font-heading text-xl font-semibold text-bark md:text-3xl">
                   {selectedCategory === 'All Resources'
                     ? 'Featured'
                     : `Featured ${selectedCategory}`}

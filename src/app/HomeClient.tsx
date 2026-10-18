@@ -71,7 +71,7 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
                   </>
                 )
                 const className =
-                  'group flex min-h-56 flex-col rounded-2xl border border-charcoal/10 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-clay/40 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-clay'
+                  'group flex min-h-56 flex-col border border-charcoal/10 bg-white p-6 transition-colors duration-200 hover:border-clay/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-clay'
 
                 return learnMore?.external ? (
                   <a

@@ -24,7 +24,7 @@ function HeroButtonLink({
   const className =
     variant === 'primary'
       ? 'group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-clay px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-bark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto'
-      : 'inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/70 bg-charcoal/20 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto'
+      : 'group inline-flex min-h-12 w-full items-center justify-center gap-2 px-1 py-3 text-sm font-semibold text-white underline decoration-white/45 underline-offset-4 transition hover:text-clay hover:decoration-clay focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto'
 
   const content = (
     <>
@@ -59,9 +59,7 @@ export default function Hero({ homePageData }: HeroProps) {
       <section className="flex min-h-[60svh] items-center justify-center bg-gradient-to-br from-sand to-cream px-5 text-center">
         <div className="text-bark/70">
           <p className="text-lg font-semibold">Homepage content is being prepared</p>
-          <p className="mt-2 text-sm">
-            Please check back soon for updates.
-          </p>
+          <p className="mt-2 text-sm">Please check back soon for updates.</p>
         </div>
       </section>
     )
@@ -92,36 +90,28 @@ export default function Hero({ homePageData }: HeroProps) {
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-b from-transparent from-60% to-charcoal lg:from-transparent lg:from-50% lg:via-charcoal/55 lg:via-70% lg:to-charcoal"
+            className="absolute inset-0 lg:bg-gradient-to-b lg:from-transparent lg:from-45% lg:via-charcoal/45 lg:via-70% lg:to-charcoal"
           />
         </div>
       )}
 
-      <div className="relative mx-auto w-full max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-14 lg:px-12 lg:pb-10 lg:pt-0 xl:pb-12">
-        <div className="lg:grid lg:grid-cols-12 lg:items-end lg:gap-10 xl:gap-14">
-          <div className="lg:col-span-6 xl:col-span-7">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-sm">
+      <div className="relative mx-auto w-full max-w-7xl px-5 pb-9 pt-5 sm:px-8 sm:pb-11 lg:px-12 lg:pb-12 lg:pt-0">
+        <div className="max-w-6xl lg:flex lg:items-end lg:justify-between lg:gap-12">
+          <div className="max-w-3xl">
+            <p className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white/80 sm:text-xs">
               Soul Care Christian Counselling
             </p>
             <h1
               id="homepage-hero-heading"
-              className="text-balance font-heading text-4xl font-semibold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[2.6rem] xl:text-5xl"
+              className="text-balance font-heading text-3xl font-semibold leading-[1.06] tracking-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.35)] sm:text-4xl lg:text-[2.55rem] xl:text-5xl"
             >
               {heroData.mainHeading}{' '}
               <span className="text-[#e7c49a]">{heroData.highlightText}</span>
             </h1>
-            <p className="mt-4 text-sm leading-6 text-white/75">
-              Faith-centred care. Culturally responsive support. Virtual counselling across Canada.
-            </p>
           </div>
-          <div className="mt-6 lg:col-span-6 lg:mt-0 xl:col-span-5">
-            <p className="text-base leading-7 text-white/90 [text-shadow:0_1px_10px_rgba(0,0,0,0.35)]">
-              {heroData.description}
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
-              <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
-            </div>
+          <div className="mt-4 flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-5 lg:mb-1 lg:mt-0 lg:shrink-0">
+            <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
+            <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
           </div>
         </div>
       </div>

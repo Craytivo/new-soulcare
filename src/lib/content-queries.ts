@@ -84,6 +84,7 @@ const teamMemberProjection = `{
     role
   ),
   image ${imageProjection},
+  secondaryImage ${imageProjection},
   bio,
   specialties,
   areasOfFocus,
@@ -91,6 +92,7 @@ const teamMemberProjection = `{
   clientTypes,
   languages,
   sessionFormats,
+  approaches,
   virtualAvailable,
   inPersonAvailable,
   socialLinks,

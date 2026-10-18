@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getInternApplicationPage } from '@/lib/content-queries'
 import InternApplicationForm from '@/components/InternApplicationForm'
+import { ArrowRight, Mail } from 'lucide-react'
 import Link from 'next/link'
 import EmptyState from '@/components/ui/EmptyState'
 
@@ -39,103 +40,135 @@ export default async function InternApplicationPage() {
   }
 
   return (
-    <>
-      <section className="relative mb-10 overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-        <div
-          className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"
-          aria-hidden="true"
-        ></div>
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
-          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 text-[11px] uppercase tracking-[.22em] ring-1 ring-cream/30">
-            {pageData.hero.badge}
-          </span>
-          <h1 className="mb-2 mt-3 font-heading text-3xl font-bold md:text-4xl">
-            {pageData.hero.heading}
-          </h1>
-          {pageData.hero.description.map((paragraph) => (
-            <p key={paragraph} className="mt-3 max-w-3xl text-cream/85">
-              {paragraph}
+    <div className="-mx-4 -my-12 bg-cream text-charcoal">
+      <div className="mx-auto max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:px-12 lg:pt-10">
+        <section className="grid overflow-hidden bg-charcoal text-white lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-16">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+              {pageData.hero.badge}
             </p>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-14 grid gap-10 md:mt-16 md:grid-cols-12 md:items-start">
-        {/* LEFT: Intern Application Form or Paused Message */}
-        <div className="md:col-span-7">
-          {pageData.acceptingApplications ? (
-            <>
-              <InternApplicationForm pageData={pageData} />
-              <p className="mt-4 text-xs text-charcoal/70">{pageData.formFields.fileUploadNote}</p>
-            </>
-          ) : (
-            <div className="rounded-2xl bg-sand p-6 ring-1 ring-charcoal/5 md:p-8">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay/15 text-clay">
-                    <svg
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-heading text-xl font-semibold">Applications Paused</h3>
-                  <p className="mt-2 leading-relaxed text-charcoal/75">
-                    We are not currently accepting internship applications. Please check back later.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* RIGHT: Intern Info Side Column */}
-        <aside className="mt-10 space-y-6 md:col-span-5 md:mt-[3.25rem]">
-          <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/5">
-            <h3 className="font-heading font-semibold">{pageData.sidebar.aboutSection.title}</h3>
-            <ul className="mt-3 space-y-2.5 text-sm">
-              {pageData.sidebar.aboutSection.benefits.map((benefit) => (
-                <li key={benefit} className="flex items-start gap-2.5">
-                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-clay" />
-                  <span className="leading-relaxed text-charcoal/75">{benefit}</span>
-                </li>
+            <h1 className="mt-4 max-w-2xl text-balance font-heading text-4xl font-semibold leading-[1.06] tracking-tight sm:text-5xl">
+              {pageData.hero.heading}
+            </h1>
+            <div className="mt-5 max-w-2xl space-y-3">
+              {pageData.hero.description.map((paragraph) => (
+                <p key={paragraph} className="text-base leading-7 text-white/75">
+                  {paragraph}
+                </p>
               ))}
-            </ul>
+            </div>
           </div>
-          <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/5">
-            <h3 className="font-heading font-semibold">
-              {pageData.sidebar.questionsSection.title}
-            </h3>
-            <p className="mt-3 text-sm text-charcoal/80">
-              {pageData.sidebar.questionsSection.description
-                .split(pageData.sidebar.questionsSection.contactEmail)
-                .map((part, index, array) => (
-                  <span key={`${part}-${index}`}>
-                    {part}
-                    {index < array.length - 1 && (
-                      <a
-                        href={`mailto:${pageData.sidebar.questionsSection.contactEmail}`}
-                        className="underline decoration-charcoal/30 hover:decoration-charcoal"
-                      >
-                        {pageData.sidebar.questionsSection.contactEmail}
-                      </a>
-                    )}
-                  </span>
-                ))}
+
+          <aside className="flex flex-col justify-center border-t border-white/15 bg-white/[0.03] p-7 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+              Application status
             </p>
+            <p className="mt-3 font-heading text-2xl font-semibold text-white">
+              {pageData.acceptingApplications ? 'Applications are open' : 'Applications are paused'}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-white/70">
+              {pageData.acceptingApplications
+                ? 'Share a little about yourself and your interest in joining our team.'
+                : 'Please check back later for updates about future opportunities.'}
+            </p>
+            {pageData.acceptingApplications ? (
+              <a
+                href="#application-form"
+                className="group mt-5 inline-flex items-center gap-2 self-start text-sm font-semibold text-clay transition hover:text-white"
+              >
+                Go to application
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </a>
+            ) : null}
+          </aside>
+        </section>
+
+        <section className="grid gap-10 border-b border-charcoal/10 py-12 sm:py-14 md:grid-cols-[minmax(0,1.25fr)_minmax(18rem,0.75fr)] md:gap-16">
+          <div id="application-form" className="scroll-mt-24">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+              01 · Your application
+            </p>
+            <h2 className="mt-3 font-heading text-2xl font-semibold text-bark sm:text-3xl">
+              {pageData.acceptingApplications ? 'Tell us about yourself.' : 'Stay in touch.'}
+            </h2>
+            {pageData.acceptingApplications ? (
+              <>
+                <InternApplicationForm pageData={pageData} />
+                <p className="mt-4 text-xs leading-5 text-charcoal/60">
+                  {pageData.formFields.fileUploadNote}
+                </p>
+              </>
+            ) : (
+              <div className="mt-6 border-t border-charcoal/10 py-5">
+                <p className="max-w-xl text-sm leading-7 text-charcoal/70">
+                  We are not currently accepting internship applications. Please check back later.
+                </p>
+                <Link
+                  href="/contact"
+                  className="group mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-bark underline decoration-clay/60 underline-offset-4 transition hover:text-clay"
+                >
+                  Contact our team
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
+            )}
           </div>
-        </aside>
-      </section>
-    </>
+
+          <aside className="space-y-8 md:border-l md:border-charcoal/10 md:pl-8">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+                02 · The opportunity
+              </p>
+              <h2 className="mt-3 font-heading text-xl font-semibold text-bark">
+                {pageData.sidebar.aboutSection.title}
+              </h2>
+              <ul className="mt-4 divide-y divide-charcoal/10 border-y border-charcoal/10">
+                {pageData.sidebar.aboutSection.benefits.map((benefit) => (
+                  <li
+                    key={benefit}
+                    className="flex items-start gap-3 py-3 text-sm leading-6 text-charcoal/70"
+                  >
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-clay" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+                03 · Questions
+              </p>
+              <h2 className="mt-3 font-heading text-xl font-semibold text-bark">
+                {pageData.sidebar.questionsSection.title}
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-charcoal/70">
+                {pageData.sidebar.questionsSection.description
+                  .split(pageData.sidebar.questionsSection.contactEmail)
+                  .map((part, index, array) => (
+                    <span key={`${part}-${index}`}>
+                      {part}
+                      {index < array.length - 1 && (
+                        <a
+                          href={`mailto:${pageData.sidebar.questionsSection.contactEmail}`}
+                          className="inline-flex items-center gap-1 font-semibold text-bark underline decoration-clay/60 underline-offset-4 transition hover:text-clay"
+                        >
+                          {pageData.sidebar.questionsSection.contactEmail}
+                          <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+                        </a>
+                      )}
+                    </span>
+                  ))}
+              </p>
+            </div>
+          </aside>
+        </section>
+      </div>
+    </div>
   )
 }

@@ -4,6 +4,7 @@ import { PortableText } from '@portabletext/react'
 import PrintButton from '@/components/PrintButton'
 import Link from 'next/link'
 import LegalTOC from '@/components/LegalTOC'
+import EditorialPageHero from '@/components/ui/EditorialPageHero'
 
 // Simple slugify for headings -> anchor ids
 const slugify = (text?: string) =>
@@ -147,72 +148,89 @@ export default async function Terms() {
   }
   const summaryItems = deriveSummary()
   return (
-    <div className="mx-auto max-w-4xl">
-      <section className="no-print relative mb-6 overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-        <div
-          className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"
-          aria-hidden="true"
-        ></div>
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
-          <h1 className="font-heading text-3xl font-bold md:text-4xl">
-            {pageData?.title || 'Terms of Use'}
-          </h1>
+    <div className="-mx-4 -my-12 bg-cream text-charcoal">
+      <div className="mx-auto max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:px-12 lg:pt-10">
+        <div className="no-print">
+          <EditorialPageHero
+            eyebrow="Using this site"
+            title={pageData?.title || 'Terms of Use'}
+            aside={
+              <>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+                  Policy details
+                </p>
+                <p className="mt-3 font-heading text-2xl font-semibold text-white">
+                  Helpful guidance for using our site.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Review these terms and contact us if anything needs clarification.
+                </p>
+              </>
+            }
+          />
         </div>
-      </section>
-      {/* Metadata row: effective date / last updated / print */}
-      <div className="mb-6 flex flex-col gap-3 text-sm text-charcoal/80 sm:flex-row sm:items-center">
-        <div>
-          Effective:{' '}
-          <strong>
-            {pageData?.effectiveDate ??
-              (pageData?._updatedAt ? new Date(pageData._updatedAt).toLocaleDateString() : '-')}
-          </strong>
-        </div>
-        <div>•</div>
-        <div>
-          Last updated:{' '}
-          {pageData?._updatedAt ? (
-            <time dateTime={pageData._updatedAt}>
-              {new Date(pageData._updatedAt).toLocaleDateString()}
-            </time>
-          ) : (
-            '-'
-          )}
-        </div>
-        <div className="ml-0 flex items-center gap-3 sm:ml-auto">
-          <Link href="/contact" className="text-clay underline">
-            Contact us about this policy
-          </Link>
-          <PrintButton />
-        </div>
-      </div>
-
-      {/* Stack layout: quick summary -> TOC -> main content (single column on all sizes) */}
-      <div>
-        {/* Plain-language summary */}
-        {summaryItems && summaryItems.length > 0 && (
-          <div className="mb-4 rounded-lg bg-sand/50 p-4 ring-1 ring-charcoal/10">
-            <strong className="mb-2 block text-sm text-charcoal/80">Quick summary</strong>
-            <ul className="list-disc space-y-1 pl-5 text-sm text-charcoal/85">
-              {summaryItems.map((s: string, i: number) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ul>
+        <div className="mx-auto mt-8 max-w-4xl">
+          {/* Metadata row: effective date / last updated / print */}
+          <div className="mb-6 flex flex-col gap-3 border-b border-charcoal/10 pb-5 text-sm text-charcoal/70 sm:flex-row sm:items-center">
+            <div>
+              Effective:{' '}
+              <strong>
+                {pageData?.effectiveDate ??
+                  (pageData?._updatedAt ? new Date(pageData._updatedAt).toLocaleDateString() : '-')}
+              </strong>
+            </div>
+            <div>•</div>
+            <div>
+              Last updated:{' '}
+              {pageData?._updatedAt ? (
+                <time dateTime={pageData._updatedAt}>
+                  {new Date(pageData._updatedAt).toLocaleDateString()}
+                </time>
+              ) : (
+                '-'
+              )}
+            </div>
+            <div className="ml-0 flex items-center gap-3 sm:ml-auto">
+              <Link
+                href="/contact"
+                className="font-semibold text-bark underline decoration-clay/60 underline-offset-4 hover:text-clay"
+              >
+                Contact us about this policy
+              </Link>
+              <PrintButton />
+            </div>
           </div>
-        )}
 
-        {/* Contents (stacked below summary on all sizes) */}
-        {headings.length > 0 && (
-          <div className="mb-6">
-            <LegalTOC headings={headings} />
+          {/* Stack layout: quick summary -> TOC -> main content (single column on all sizes) */}
+          <div>
+            {/* Plain-language summary */}
+            {summaryItems && summaryItems.length > 0 && (
+              <div className="mb-6 border-y border-charcoal/10 bg-white px-5 py-4">
+                <strong className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-clay">
+                  Quick summary
+                </strong>
+                <ul className="list-disc space-y-1 pl-5 text-sm text-charcoal/75">
+                  {summaryItems.map((s: string, i: number) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Contents (stacked below summary on all sizes) */}
+            {headings.length > 0 && (
+              <div className="mb-6">
+                <LegalTOC headings={headings} />
+              </div>
+            )}
+
+            <div className="prose prose-lg max-w-none">
+              {pageData?.content && (
+                <PortableText value={pageData.content} components={portableTextComponents} />
+              )}
+            </div>
           </div>
-        )}
-
-        <main className="prose prose-lg max-w-none">
-          {pageData?.content && (
-            <PortableText value={pageData.content} components={portableTextComponents} />
-          )}
-        </main>
+        </div>
       </div>
     </div>
   )

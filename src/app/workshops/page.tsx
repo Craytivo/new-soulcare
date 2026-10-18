@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 export const revalidate = 300
 import ContentWorkshops from '@/components/ContentWorkshops'
+import EditorialPageHero from '@/components/ui/EditorialPageHero'
 
 export const metadata: Metadata = {
   title: 'Wellness Webinars â€” Soul Care Counselling',
@@ -11,87 +12,93 @@ export const metadata: Metadata = {
 
 export default function WorkshopsPage() {
   return (
-    <>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-        <div
-          className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"
-          aria-hidden="true"
-        ></div>
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
-          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 text-[11px] uppercase tracking-[.22em] ring-1 ring-cream/30">
-            Wellness Webinar Recordings
-          </span>
-          <h1 className="mt-3 font-heading text-3xl font-bold md:text-4xl">
-            Wellness Webinar Recordings
-          </h1>
-          <p className="mt-3 max-w-3xl text-cream/85">
-            Missed our free monthly webinars? Below, you&apos;ll find recordings of all previous
-            virtual webinars, each packed with valuable insights and practical tips from our
-            dedicated therapists.
-          </p>
-        </div>
-      </section>
+    <div className="-mx-4 -my-12 bg-cream text-charcoal">
+      <div className="mx-auto max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:px-12 lg:pt-10">
+        <EditorialPageHero
+          eyebrow="Wellness webinar recordings"
+          title="Learn and reflect at your own pace."
+          description="Missed our free monthly webinars? Explore past virtual sessions for practical insights from our counselling team."
+          aside={
+            <>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+                On demand
+              </p>
+              <p className="mt-3 font-heading text-2xl font-semibold text-white">
+                Revisit the conversations that matter.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-white/70">
+                Watch recordings and find ideas to support wellbeing in everyday life.
+              </p>
+            </>
+          }
+        />
 
-      {/* Workshops from Content */}
-      <ContentWorkshops />
+        {/* Workshops from Content */}
+        <ContentWorkshops />
 
-      {/* YouTube Playlist Section */}
-      <section className="mt-16 rounded-2xl bg-sand p-6 ring-1 ring-charcoal/10 md:p-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h3 className="mb-3 font-heading text-xl font-semibold md:text-2xl">
-            Watch Our Workshop Playlist
-          </h3>
-          <p className="mb-6 text-charcoal/80">
-            Catch up on past workshops and Soul Care Conversations on our YouTube playlist.
-          </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlhZux5jyaC8Cv3SjYpvauGPC-hyWiN3P"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md bg-clay px-6 py-3 text-lg font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-clay/90"
-          >
-            View the Workshop Playlist on YouTube
-          </a>
-          <div className="mt-8 flex justify-center">
+        {/* YouTube Playlist Section */}
+        <section className="grid gap-8 border-y border-charcoal/10 py-10 sm:py-12 md:grid-cols-2 md:items-center md:gap-12">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+              More to explore
+            </p>
+            <h2 className="mt-3 font-heading text-2xl font-semibold text-bark sm:text-3xl">
+              Watch Our Workshop Playlist
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-charcoal/75">
+              Catch up on past workshops and Soul Care Conversations on our YouTube playlist.
+            </p>
+            <a
+              href="https://www.youtube.com/playlist?list=PLlhZux5jyaC8Cv3SjYpvauGPC-hyWiN3P"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex min-h-11 items-center justify-center bg-clay px-5 py-3 text-sm font-semibold text-white transition hover:bg-bark"
+            >
+              View the Workshop Playlist on YouTube
+            </a>
+          </div>
+          <div className="min-w-0">
             <iframe
-              width="360"
-              height="203"
               src="https://www.youtube.com/embed/videoseries?list=PLlhZux5jyaC8Cv3SjYpvauGPC-hyWiN3P"
               title="Soul Care Workshops Playlist"
+              width="560"
+              height="315"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              className="rounded-xl border border-charcoal/10 shadow-lg"
+              className="aspect-video w-full border border-charcoal/10"
             ></iframe>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="mt-16 rounded-2xl bg-bark p-6 text-cream ring-1 ring-cream/15 md:p-8">
-        <div className="grid gap-6 md:grid-cols-3 md:items-center">
-          <div className="md:col-span-2">
-            <h3 className="font-heading text-xl font-semibold md:text-2xl">
-              Ready to begin your healing journey?
-            </h3>
-            <p className="mt-2 text-cream/85">
-              Book a free consultation to explore how our faith-centered approach can support your
-              growth.
-            </p>
+        {/* CTA Section */}
+        <section className="py-10 sm:py-14">
+          <div className="bg-charcoal px-6 py-8 text-white sm:px-8 sm:py-10 lg:flex lg:items-end lg:justify-between lg:gap-10">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+                A thoughtful next step
+              </p>
+              <h2 className="mt-3 font-heading text-2xl font-semibold sm:text-3xl">
+                Ready to begin your healing journey?
+              </h2>
+              <p className="mt-3 leading-7 text-white/70">
+                Book a free consultation to explore how our faith-centered approach can support your
+                growth.
+              </p>
+            </div>
+            <div className="mt-6 lg:mt-0">
+              <a
+                href="https://thesoulcarecounsellor.janeapp.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center justify-center bg-clay px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-bark"
+              >
+                Book a Free Consultation
+              </a>
+            </div>
           </div>
-          <div className="md:justify-self-end">
-            <a
-              href="https://thesoulcarecounsellor.janeapp.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-clay/90"
-            >
-              Book a Free Consultation
-            </a>
-          </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </div>
+    </div>
   )
 }

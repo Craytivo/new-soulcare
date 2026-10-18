@@ -32,12 +32,12 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
     if (animateIn) closeBtnRef.current?.focus()
   }, [animateIn])
 
-      // Submission is handled by the Next.js API route.
+  // Submission is handled by the Next.js API route.
 
   // Render form field based on type
   const renderFormField = (question: InternApplicationPage['formFields']['formQuestions'][0]) => {
     const baseClasses =
-      'mt-1 w-full rounded-full border border-charcoal/10 bg-white px-4 py-2.5 text-sm outline-none ring-0 focus:border-clay focus:ring-2 focus:ring-clay/20 placeholder:text-charcoal/40'
+      'mt-1 w-full border border-charcoal/10 bg-white px-4 py-2.5 text-sm outline-none ring-0 placeholder:text-charcoal/40 focus:border-clay focus:ring-2 focus:ring-clay/20'
 
     switch (question.fieldType) {
       case 'textarea':
@@ -156,7 +156,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
     <form
       name="intern-application"
       encType="multipart/form-data"
-      className="mt-4 space-y-6 rounded-2xl bg-white p-6 ring-1 ring-charcoal/5 md:p-8"
+      className="mt-6 space-y-6 border border-charcoal/10 bg-white p-5 sm:p-7"
       onSubmit={handleSubmit}
     >
       <input type="hidden" name="form-name" value="intern-application" />
@@ -198,7 +198,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
       <div className="flex items-center gap-3 pt-2">
         <button
           type="submit"
-          className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 text-sm font-semibold text-cream transition-colors hover:bg-clay/90"
+          className="inline-flex min-h-11 items-center justify-center bg-clay px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-bark"
         >
           Send application
         </button>

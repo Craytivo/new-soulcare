@@ -1,10 +1,29 @@
-import { getServicePage } from '@/lib/content-queries'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react'
 import { PortableText } from '@portabletext/react'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { getServicePage } from '@/lib/content-queries'
 
 interface ContentServicePageProps {
   slug: string
+}
+
+type ServiceCta = {
+  text: string
+  url: string
+  external: boolean
+}
+
+type Section = {
+  _key?: string
+  _type: string
+  title?: string
+  content?: unknown[]
+  items?: Array<{ label?: string; value?: string }> | string[]
+  description?: string
+  note?: string
+  primaryButton?: ServiceCta
+  secondaryButton?: ServiceCta
 }
 
 export default async function ContentServicePage({ slug }: ContentServicePageProps) {
@@ -13,29 +32,44 @@ export default async function ContentServicePage({ slug }: ContentServicePagePro
     notFound()
   }
 
-  const renderCtaButton = (
-    cta: { text: string; url: string; external: boolean },
-    className: string
-  ) => {
-    if (cta.external) {
-      return (
-        <a href={cta.url} target="_blank" rel="noopener noreferrer" className={className}>
-          {cta.text}
-        </a>
-      )
-    } else {
-      return (
-        <Link href={cta.url} className={className}>
-          {cta.text}
-        </Link>
-      )
-    }
+  const renderCtaButton = (cta: ServiceCta, variant: 'primary' | 'secondary') => {
+    const className =
+      variant === 'primary'
+        ? 'group inline-flex min-h-12 items-center justify-center gap-2 bg-clay px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-bark'
+        : 'group inline-flex min-h-12 items-center gap-2 px-1 py-3 text-sm font-semibold text-white/75 underline decoration-white/30 underline-offset-4 transition hover:text-white'
+
+    const content = (
+      <>
+        {cta.text}
+        {variant === 'primary' ? (
+          <ArrowRight
+            className="h-4 w-4 transition-transform group-hover:translate-x-1"
+            aria-hidden="true"
+          />
+        ) : (
+          <ArrowUpRight
+            className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            aria-hidden="true"
+          />
+        )}
+      </>
+    )
+
+    return cta.external ? (
+      <a href={cta.url} target="_blank" rel="noopener noreferrer" className={className}>
+        {content}
+      </a>
+    ) : (
+      <Link href={cta.url} className={className}>
+        {content}
+      </Link>
+    )
   }
 
   const textSectionComponents = {
     block: {
       normal: ({ children }: { children?: React.ReactNode }) => (
-        <p className="leading-relaxed">{children}</p>
+        <p className="leading-7 text-charcoal/75">{children}</p>
       ),
       h3: ({ children }: { children?: React.ReactNode }) => (
         <h3 className="pt-2 font-heading text-lg font-semibold text-bark md:text-xl">{children}</h3>
@@ -54,13 +88,13 @@ export default async function ContentServicePage({ slug }: ContentServicePagePro
     },
     listItem: {
       bullet: ({ children }: { children?: React.ReactNode }) => (
-        <li className="flex items-start gap-3 leading-relaxed">
-          <span className="mt-2 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-bark" />
+        <li className="flex items-start gap-3 leading-relaxed text-charcoal/75">
+          <span className="mt-2 inline-block h-2 w-2 shrink-0 rounded-full bg-clay" />
           <span>{children}</span>
         </li>
       ),
       number: ({ children }: { children?: React.ReactNode }) => (
-        <li className="pl-1 leading-relaxed">{children}</li>
+        <li className="pl-1 leading-relaxed text-charcoal/75">{children}</li>
       ),
     },
     marks: {
@@ -70,124 +104,147 @@ export default async function ContentServicePage({ slug }: ContentServicePagePro
     },
   }
 
-  type Section = {
-    _key?: string
-    _type: string
-    title?: string
-    content?: unknown[]
-    items?: Array<{ label?: string; value?: string }> | string[]
-    description?: string
-    note?: string
-    primaryButton?: { text: string; url: string; external: boolean }
-    secondaryButton?: { text: string; url: string; external: boolean }
-  }
-  const renderSection = (section: Section) => {
+  const renderSection = (section: Section, index: number) => {
     const sectionKey = section._key || `${section._type}-${section.title || 'section'}`
+    const number = String(index + 1).padStart(2, '0')
+    const heading = (
+      <>
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+          {number} · Service details
+        </p>
+        <h2 className="mt-3 font-heading text-2xl font-semibold leading-tight text-bark sm:text-3xl">
+          {section.title}
+        </h2>
+      </>
+    )
+
     switch (section._type) {
-      case 'textSection':
+      case 'textSection': {
+        const content = Array.isArray(section.content)
+          ? section.content.filter(
+              (block): block is import('@portabletext/types').TypedObject =>
+                typeof block === 'object' && block !== null && '_type' in block
+            )
+          : []
+
         return (
-          <section key={sectionKey} className="mx-auto mt-12 max-w-3xl">
-            <h2 className="font-heading text-2xl font-bold text-charcoal md:text-3xl">
-              {section.title}
-            </h2>
-            <div className="mt-4 space-y-4 text-charcoal/90">
-              <PortableText
-                components={textSectionComponents}
-                value={
-                  Array.isArray(section.content)
-                    ? section.content.filter(
-                        (block): block is import('@portabletext/types').TypedObject =>
-                          typeof block === 'object' && block !== null && '_type' in block
-                      )
-                    : []
-                }
-              />
+          <section
+            key={sectionKey}
+            className="grid gap-6 border-b border-charcoal/10 py-12 sm:py-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20"
+          >
+            <div>{heading}</div>
+            <div className="space-y-4 text-base leading-7">
+              <PortableText components={textSectionComponents} value={content} />
             </div>
           </section>
         )
+      }
 
-      case 'detailsSection':
+      case 'detailsSection': {
         const isSingleSession = page.slug?.current === 'single-session'
         const isAffordable = page.slug?.current === 'affordable'
+        const items = Array.isArray(section.items) ? section.items : []
+        const visibleItems = items.filter((item) => {
+          const label =
+            typeof item === 'string' ? item.toLowerCase() : (item.label?.toLowerCase() ?? '')
+          const isPrice = label.includes('cost') || label.includes('price') || label.includes('fee')
+          return !isPrice || isSingleSession || isAffordable
+        })
+
         return (
-          <section key={sectionKey} className="mx-auto mt-12 max-w-5xl">
-            <h2 className="font-heading text-2xl font-bold text-charcoal md:text-3xl">
-              {section.title}
-            </h2>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {(section.items as Array<{ label: string; value: string }> | string[])
-                .filter((item: { label?: string; value?: string } | string) => {
-                  const label = typeof item === 'string' ? item : (item.label?.toLowerCase() ?? '')
-                  if (label.includes('cost') || label.includes('price') || label.includes('fee')) {
-                    return isSingleSession || isAffordable
-                  }
-                  return true
-                })
-                .map((item: { label?: string; value?: string } | string) => {
-                  let value = typeof item === 'string' ? item : (item.value ?? item.label)
-                  if (
-                    isSingleSession &&
-                    typeof item !== 'string' &&
-                    (item.label?.toLowerCase().includes('cost') ||
-                      item.label?.toLowerCase().includes('price') ||
-                      item.label?.toLowerCase().includes('fee'))
-                  ) {
-                    value = '$20.00 per session'
-                  }
-                  return (
-                    <div
-                      key={`${typeof item === 'string' ? item : `${item.label}-${item.value}`}`}
-                      className="rounded-lg bg-white p-5 shadow-sm ring-1 ring-charcoal/10"
-                    >
-                      <dt className="font-semibold">
-                        {typeof item === 'string' ? item : (item.label ?? item.value)}
-                      </dt>
-                      <dd className="mt-1 text-charcoal/90">{value}</dd>
-                    </div>
-                  )
-                })}
+          <section
+            key={sectionKey}
+            className="grid gap-6 border-b border-charcoal/10 py-12 sm:py-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20"
+          >
+            <div>{heading}</div>
+            <dl className="grid content-start gap-x-8 sm:grid-cols-2">
+              {visibleItems.map((item) => {
+                const label = typeof item === 'string' ? item : (item.label ?? item.value ?? '')
+                let value = typeof item === 'string' ? item : (item.value ?? item.label ?? '')
+                const labelLower = typeof item === 'string' ? '' : (item.label?.toLowerCase() ?? '')
+
+                if (
+                  isSingleSession &&
+                  (labelLower.includes('cost') ||
+                    labelLower.includes('price') ||
+                    labelLower.includes('fee'))
+                ) {
+                  value = '$20.00 per session'
+                }
+
+                return (
+                  <div
+                    key={`${label}-${value}`}
+                    className="border-t border-charcoal/10 py-4 first:border-t-0"
+                  >
+                    <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-charcoal/50">
+                      {label}
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-bark">{value}</dd>
+                  </div>
+                )
+              })}
+            </dl>
+          </section>
+        )
+      }
+
+      case 'listSection': {
+        const items = Array.isArray(section.items)
+          ? section.items.filter((item): item is string => typeof item === 'string')
+          : []
+
+        return (
+          <section
+            key={sectionKey}
+            className="grid gap-6 border-b border-charcoal/10 py-12 sm:py-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20"
+          >
+            <div>{heading}</div>
+            <div>
+              <ul className="divide-y divide-charcoal/10 border-y border-charcoal/10">
+                {items.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 py-4 text-sm leading-6 text-charcoal/75"
+                  >
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-clay" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              {section.note ? (
+                <p className="mt-4 text-sm leading-6 text-charcoal/60">{section.note}</p>
+              ) : null}
             </div>
           </section>
         )
-
-      case 'listSection':
-        return (
-          <section key={sectionKey} className="mx-auto mt-12 max-w-5xl">
-            <h2 className="font-heading text-2xl font-bold text-charcoal md:text-3xl">
-              {section.title}
-            </h2>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {(section.items as string[]).map((item: string) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-2 inline-block h-2.5 w-2.5 rounded-full bg-bark"></span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            {section.note && <p className="mt-6 text-sm text-charcoal/75">{section.note}</p>}
-          </section>
-        )
+      }
 
       case 'ctaSection':
         return (
-          <section key={sectionKey} className="mx-auto mt-12 max-w-3xl">
-            <div className="rounded-xl bg-bark p-6 text-cream ring-1 ring-cream/15">
-              <h3 className="font-heading text-xl font-bold md:text-2xl">{section.title}</h3>
-              {section.description && (
-                <p className="mt-2 whitespace-pre-line text-cream/90">{section.description}</p>
-              )}
-              <div className="mt-5 flex flex-wrap gap-3">
-                {section.primaryButton &&
-                  renderCtaButton(
-                    section.primaryButton,
-                    'inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90'
-                  )}
-                {section.secondaryButton &&
-                  renderCtaButton(
-                    section.secondaryButton,
-                    'inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90'
-                  )}
+          <section key={sectionKey} className="py-10 sm:py-12">
+            <div className="bg-charcoal px-6 py-8 text-white sm:px-8 sm:py-10 lg:flex lg:items-end lg:justify-between lg:gap-10">
+              <div className="max-w-2xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+                  {number} · A next step
+                </p>
+                <h2 className="mt-3 font-heading text-2xl font-semibold sm:text-3xl">
+                  {section.title}
+                </h2>
+                {section.description ? (
+                  <p className="mt-3 whitespace-pre-line text-sm leading-7 text-white/70">
+                    {section.description}
+                  </p>
+                ) : null}
               </div>
+              {section.primaryButton || section.secondaryButton ? (
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 lg:mt-0">
+                  {section.primaryButton ? renderCtaButton(section.primaryButton, 'primary') : null}
+                  {section.secondaryButton
+                    ? renderCtaButton(section.secondaryButton, 'secondary')
+                    : null}
+                </div>
+              ) : null}
             </div>
           </section>
         )
@@ -198,41 +255,109 @@ export default async function ContentServicePage({ slug }: ContentServicePagePro
   }
 
   return (
-    <>
-      {/* Page Hero */}
-      <section className="mx-auto max-w-3xl">
-        <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 text-[11px] uppercase tracking-[.22em] text-charcoal/80 ring-1 ring-charcoal/10">
-          {page.badge}
-        </span>
-        <h1 className="mt-3 font-heading text-3xl font-bold text-charcoal md:text-4xl">
-          {page.mainTitle}
-        </h1>
+    <div className="-mx-4 -my-12 bg-cream text-charcoal">
+      <div className="mx-auto max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:px-12 lg:pt-10">
+        <Link
+          href="/services"
+          className="group inline-flex items-center gap-2 text-sm font-semibold text-bark/65 transition hover:text-bark"
+        >
+          <ArrowLeft
+            className="h-4 w-4 transition-transform group-hover:-translate-x-1"
+            aria-hidden="true"
+          />
+          All services
+        </Link>
 
-        {page.quote && (
-          <blockquote className="mt-6 border-l-4 border-clay pl-4 italic text-charcoal/90">
-            &quot;{page.quote.text}&quot;
-            <span className="font-semibold not-italic"> {page.quote.attribution}</span>
-          </blockquote>
-        )}
+        <section className="mt-7 grid overflow-hidden bg-charcoal text-white lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-16">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+              {page.badge}
+            </p>
+            <h1 className="mt-4 max-w-2xl text-balance font-heading text-4xl font-semibold leading-[1.06] tracking-tight sm:text-5xl">
+              {page.mainTitle}
+            </h1>
+            <p className="mt-5 max-w-2xl whitespace-pre-line text-base leading-7 text-white/75 sm:text-lg">
+              {page.heroDescription}
+            </p>
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2">
+              {renderCtaButton(page.primaryCta, 'primary')}
+              {renderCtaButton(page.secondaryCta, 'secondary')}
+            </div>
+          </div>
 
-        <div className="mt-6 whitespace-pre-line leading-relaxed text-charcoal/90">
-          {page.heroDescription}
-        </div>
+          <div className="flex flex-col justify-center border-t border-white/15 bg-white/[0.03] p-7 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+            {page.quote ? (
+              <blockquote>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
+                  A word to carry with you
+                </p>
+                <p className="mt-4 font-serif text-xl italic leading-8 text-white/85 sm:text-2xl">
+                  &ldquo;{page.quote.text}&rdquo;
+                </p>
+                <footer className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-clay">
+                  {page.quote.attribution}
+                </footer>
+              </blockquote>
+            ) : (
+              <p className="max-w-md font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
+                Thoughtful care, shaped around your story.
+              </p>
+            )}
+            <div className="mt-8 border-t border-white/15 pt-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+                Not sure where to begin?
+              </p>
+              <Link
+                href="/contact"
+                className="group mt-3 inline-flex items-center gap-2 text-sm font-semibold text-clay transition hover:text-white"
+              >
+                Talk with our team
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+          </div>
+        </section>
 
-        <div className="mt-6 flex flex-wrap gap-3">
-          {renderCtaButton(
-            page.primaryCta,
-            'inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90'
-          )}
-          {renderCtaButton(
-            page.secondaryCta,
-            'inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90'
-          )}
-        </div>
-      </section>
+        <div>{page.sections.map((section, index) => renderSection(section, index))}</div>
 
-      {/* Render all sections */}
-      {page.sections.map((section) => renderSection(section))}
-    </>
+        <section className="border-t border-charcoal/10 py-10" aria-label="Continue exploring">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-heading text-xl font-semibold text-bark">
+                Exploring your options?
+              </p>
+              <p className="mt-1 text-sm leading-6 text-charcoal/65">
+                Browse our services or reach out if you would like help choosing.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              <Link
+                href="/services"
+                className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-bark underline decoration-clay/60 underline-offset-4 transition hover:text-clay"
+              >
+                All services
+                <ArrowLeft
+                  className="h-4 w-4 transition-transform group-hover:-translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+              <Link
+                href="/contact"
+                className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-bark underline decoration-clay/60 underline-offset-4 transition hover:text-clay"
+              >
+                Contact our team
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
   )
 }

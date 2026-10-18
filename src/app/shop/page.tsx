@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import WaitlistForm from '@/components/forms/WaitlistForm'
+import EditorialPageHero from '@/components/ui/EditorialPageHero'
 
 export const revalidate = 300
 
@@ -11,58 +12,62 @@ export const metadata: Metadata = {
 
 export default function ShopPage() {
   return (
-    <>
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-        <div
-          className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-clay/50 to-cream/10 blur-2xl"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-gradient-to-tr from-clay/35 to-transparent blur-2xl"
-          aria-hidden="true"
-        ></div>
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
-          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 text-[11px] uppercase tracking-[.22em] ring-1 ring-cream/30">
-            Coming Soon
-          </span>
-          <h1 className="mt-3 font-heading text-3xl font-bold md:text-4xl">Soul Care Shop</h1>
-          <p className="mt-3 max-w-3xl leading-relaxed text-cream/85">
-            We are building this page and will share updates as soon as it is ready. If you would
-            like to be notified first, join the waitlist below.
-          </p>
-          <WaitlistForm />
-        </div>
-      </section>
+    <div className="-mx-4 -my-12 bg-cream text-charcoal">
+      <div className="mx-auto max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:px-12 lg:pt-10">
+        <EditorialPageHero
+          eyebrow="Coming soon"
+          title="A little something for your wellbeing."
+          description="We are building the Soul Care shop and will share updates as soon as it is ready. Join the waitlist to hear when it launches."
+          aside={
+            <>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+                Be the first to know
+              </p>
+              <p className="mt-3 font-heading text-2xl font-semibold text-white">
+                Thoughtful tools are on the way.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-white/70">
+                Sign up for a launch update. We will only email you about the shop.
+              </p>
+            </>
+          }
+        >
+          <div className="mt-7 max-w-lg">
+            <WaitlistForm />
+          </div>
+        </EditorialPageHero>
 
-      <section className="mt-12 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 md:p-8">
-        <div className="grid gap-6 md:grid-cols-3 md:items-center">
-          <div className="md:col-span-2">
-            <h2 className="font-heading text-xl font-semibold md:text-2xl">
+        <section className="grid gap-6 border-y border-charcoal/10 py-10 sm:py-12 md:grid-cols-[1fr_auto] md:items-center md:gap-10">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+              Need support now?
+            </p>
+            <h2 className="mt-3 font-heading text-xl font-semibold text-bark md:text-2xl">
               Need support right now?
             </h2>
-            <p className="mt-2 text-charcoal/80">
+            <p className="mt-2 text-sm leading-7 text-charcoal/75">
               While the shop is in progress, you can still access support through counselling and
               our free resource library.
             </p>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row md:flex-col md:items-end">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <a
               href="https://thesoulcarecounsellor.janeapp.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-clay/90"
+              className="inline-flex min-h-11 items-center justify-center bg-clay px-5 py-3 text-sm font-semibold text-white transition hover:bg-bark"
             >
               Book Consultation
             </a>
             <Link
               href="/resources"
-              className="inline-flex items-center justify-center rounded-md bg-sand px-5 py-2.5 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-sand/90"
+              className="inline-flex min-h-11 items-center justify-center border border-charcoal/15 bg-white px-5 py-3 text-sm font-semibold text-bark transition hover:border-clay/40"
             >
               View Resources
             </Link>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </div>
+    </div>
   )
 }

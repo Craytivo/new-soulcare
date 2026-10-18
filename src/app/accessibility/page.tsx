@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getAccessibilityPage } from '@/lib/content-queries'
 import { PortableText } from '@portabletext/react'
+import EditorialPageHero from '@/components/ui/EditorialPageHero'
 
 export const revalidate = 300
 
@@ -13,20 +14,28 @@ export const metadata: Metadata = {
 export default async function AccessibilityPage() {
   const pageData = await getAccessibilityPage()
   return (
-    <div className="mx-auto max-w-4xl">
-      <section className="relative mb-12 overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-        <div
-          className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"
-          aria-hidden="true"
-        ></div>
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
-          <h1 className="font-heading text-3xl font-bold md:text-4xl">
-            {pageData?.title || 'Accessibility'}
-          </h1>
+    <div className="-mx-4 -my-12 bg-cream text-charcoal">
+      <div className="mx-auto max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:px-12 lg:pt-10">
+        <EditorialPageHero
+          eyebrow="Our commitment"
+          title={pageData?.title || 'Accessibility'}
+          aside={
+            <>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+                Access matters
+              </p>
+              <p className="mt-3 font-heading text-2xl font-semibold text-white">
+                Care and information should be accessible.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-white/70">
+                Read our accessibility statement and contact us if you need assistance.
+              </p>
+            </>
+          }
+        />
+        <div className="prose prose-lg mt-10 max-w-4xl border-t border-charcoal/10 pt-8">
+          {pageData?.content && <PortableText value={pageData.content} />}
         </div>
-      </section>
-      <div className="prose prose-lg max-w-none">
-        {pageData?.content && <PortableText value={pageData.content} />}
       </div>
     </div>
   )

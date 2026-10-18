@@ -37,6 +37,9 @@ export default async function TeamMemberRoute({ params }: TeamMemberPageProps) {
       (member.image
         ? urlForImage(member.image, { width: 1200, height: 600, fit: 'crop' }).url()
         : ''),
+    secondaryImage: member.secondaryImage
+      ? urlForImage(member.secondaryImage, { width: 900, height: 600, fit: 'crop' }).url()
+      : '',
     portraitImage:
       getLocalTeamImage(member) ??
       (member.image
@@ -45,6 +48,11 @@ export default async function TeamMemberRoute({ params }: TeamMemberPageProps) {
     bio: member.bio as unknown[],
     specialties: member.specialties || [],
     areasOfFocus: member.areasOfFocus || [],
+    bestFitFor: member.bestFitFor || '',
+    clientTypes: member.clientTypes || [],
+    languages: member.languages || [],
+    sessionFormats: member.sessionFormats || [],
+    approaches: member.approaches || [],
     socialLinks: member.socialLinks || [],
   }
 

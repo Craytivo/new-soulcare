@@ -145,6 +145,7 @@ export interface TeamMember {
   credentials?: string
   role: string
   image: ContentImage
+  secondaryImage?: ContentImage
   bio: unknown[]
   specialties?: string[]
   areasOfFocus?: string[]
@@ -152,6 +153,7 @@ export interface TeamMember {
   clientTypes?: string[]
   languages?: string[]
   sessionFormats?: string[]
+  approaches?: string[]
   virtualAvailable?: boolean
   inPersonAvailable?: boolean
   socialLinks?: Array<{

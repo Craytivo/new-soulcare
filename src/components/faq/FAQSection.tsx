@@ -17,13 +17,14 @@ export default function FAQSection({ title, id, faqs, startIndex }: FAQSectionPr
   if (faqs.length === 0) return null
 
   return (
-    <section id={id} className="mt-14 md:mt-16">
-      <div className="mb-4 flex items-center gap-3">
-        <div className="h-px flex-1 bg-charcoal/5" />
-        <h2 className="font-heading text-xs uppercase tracking-[.2em] text-charcoal/40">{title}</h2>
-        <div className="h-px flex-1 bg-charcoal/5" />
+    <section id={id} className="scroll-mt-24 py-10 sm:py-12">
+      <div className="mb-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+          {String(startIndex + 1).padStart(2, '0')} · Common questions
+        </p>
+        <h2 className="mt-2 font-heading text-2xl font-semibold text-bark sm:text-3xl">{title}</h2>
       </div>
-      <div className="space-y-3">
+      <div className="divide-y divide-charcoal/10 border-y border-charcoal/10">
         {faqs.map((faq, i) => (
           <FAQAccordion
             key={`${faq.question}-${faq.order || i}`}

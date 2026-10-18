@@ -40,16 +40,14 @@ export default function CTASection({ icon }: CTASectionProps) {
   }
 
   return (
-    <section className="mt-16 rounded-2xl bg-gradient-to-br from-sand/60 to-sand/40 p-8 ring-1 ring-charcoal/5 backdrop-blur-sm md:p-10">
+    <section className="bg-charcoal px-6 py-8 text-white sm:px-8 sm:py-10 lg:flex lg:items-end lg:justify-between lg:gap-10">
       <div className="md:grid md:grid-cols-2 md:items-center md:gap-10">
         <div className="mb-6 md:mb-0">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-clay/15">
-            {icons[icon]}
-          </div>
-          <h3 className="mb-2 font-heading text-xl font-semibold tracking-tight md:text-2xl">
+          <div className="mb-3">{icons[icon]}</div>
+          <h3 className="mb-2 font-heading text-xl font-semibold tracking-tight text-white md:text-2xl">
             Still have questions?
           </h3>
-          <p className="leading-relaxed text-charcoal/75">
+          <p className="leading-relaxed text-white/70">
             We&apos;re happy to help. Book a free consultation or reach out to our team â€” no
             pressure, just support.
           </p>
@@ -59,13 +57,13 @@ export default function CTASection({ icon }: CTASectionProps) {
             href="https://thesoulcarecounsellor.janeapp.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 text-sm font-semibold text-cream transition-colors hover:bg-clay/90"
+            className="inline-flex min-h-11 items-center justify-center bg-clay px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-bark"
           >
             Book a Free Consultation
           </a>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-sm font-medium text-charcoal/70 ring-1 ring-charcoal/10 transition-colors hover:bg-charcoal/5"
+            className="inline-flex min-h-11 items-center justify-center border border-white/20 px-5 py-3 text-sm font-semibold text-white/75 transition-colors hover:border-white/50 hover:text-white"
           >
             Contact Our Team
           </Link>

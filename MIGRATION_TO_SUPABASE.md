@@ -140,6 +140,8 @@ Only use these options if you explicitly want them:
 
 The importer uploads images to `site-assets`, files to `resource-files`, replaces asset references with Supabase Storage URLs, and upserts documents in batches. Keep the archive and service-role key out of Git. The importer is a one-time migration tool and can be removed after the import is verified.
 
+To limit an import to selected content types and only upload the assets referenced by those documents, pass a comma-separated `--types` filter. For example, `--types=resource` selects resource documents only. Review the dry-run counts before applying; applying this filter still upserts the selected resource records.
+
 ## 8. Organize migrated Supabase assets
 
 The migrated assets have been cleaned in Supabase. All 29 rows in `content_assets` now use readable paths grouped by purpose:
