@@ -1,7 +1,16 @@
 import { getCoreValuesPage } from '@/lib/content-queries'
-import { urlFor } from '@/lib/content'
+import { urlFor, type CoreValuesPage } from '@/lib/content'
 import Image from 'next/image'
 import Link from 'next/link'
+
+function getHeroImagePosition(image: CoreValuesPage['hero']['image']) {
+  const hotspot = image.hotspot
+  if (hotspot && typeof hotspot.x === 'number' && typeof hotspot.y === 'number') {
+    return `${hotspot.x * 100}% ${hotspot.y * 100}%`
+  }
+
+  return '50% 28%'
+}
 
 export default async function ContentCoreValuesPage() {
   const page = await getCoreValuesPage()
@@ -36,67 +45,101 @@ export default async function ContentCoreValuesPage() {
   }
 
   return (
-    <>
-      {/* Page hero with image */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-        <div
-          className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"
-          aria-hidden="true"
-        ></div>
-
-        <div className="relative z-10 grid items-center gap-8 px-6 py-10 md:grid-cols-2 md:px-10 md:py-14">
-          {/* LEFT: Text */}
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 text-[11px] uppercase tracking-[.22em] ring-1 ring-cream/30">
-              {page.hero.badge}
-            </span>
-            <h1 className="mt-3 font-heading text-3xl font-bold md:text-4xl">{page.hero.title}</h1>
-            <p className="mt-3 max-w-3xl text-cream/85">{page.hero.description}</p>
+    <div className="-mx-4 -my-12 bg-cream">
+      <section className="relative isolate overflow-hidden bg-charcoal text-white lg:flex lg:min-h-[min(62vw,calc(100svh-5rem))] lg:items-end">
+        {page.hero.image && (
+          <div className="relative aspect-[124/77] w-full lg:absolute lg:inset-0 lg:-z-20 lg:aspect-auto">
+            <Image
+              src={urlFor(page.hero.image).width(2200).height(1400).quality(92).url()}
+              alt={page.hero.image.alt || page.hero.title}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              style={{ objectPosition: getHeroImagePosition(page.hero.image) }}
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-b from-transparent from-55% to-charcoal lg:from-transparent lg:from-45% lg:via-charcoal/55 lg:via-70% lg:to-charcoal"
+            />
           </div>
+        )}
 
-          {/* RIGHT: Image */}
-          {page.hero.image && (
-            <div className="relative overflow-hidden rounded-xl shadow-lg ring-1 ring-cream/15">
-              <Image
-                src={urlFor(page.hero.image).url()}
-                alt={page.hero.image.alt || page.hero.title}
-                width={620}
-                height={310}
-                className="block h-full w-full object-cover"
-                priority
-              />
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-14 lg:px-12 lg:pb-10 lg:pt-0 xl:pb-12">
+          <div className="lg:grid lg:grid-cols-12 lg:items-end lg:gap-10 xl:gap-14">
+            <div className="lg:col-span-6 xl:col-span-7">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-sm">
+                {page.hero.badge}
+              </p>
+              <h1 className="max-w-4xl text-balance font-heading text-4xl font-semibold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[2.6rem] xl:text-5xl">
+                {page.hero.title}
+              </h1>
             </div>
+            <div className="mt-6 lg:col-span-6 lg:mt-0 xl:col-span-5">
+              <p className="max-w-xl text-base leading-7 text-white/90 [text-shadow:0_1px_10px_rgba(0,0,0,0.35)] sm:text-lg">
+                {page.hero.description}
+              </p>
+              <div className="mt-6 flex">{renderCtaButton()}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
+        <div className="mb-8 max-w-2xl">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+            What guides our care
+          </p>
+          <h2 className="font-heading text-3xl font-semibold tracking-tight text-bark sm:text-4xl">
+            The pillars beneath our work
+          </h2>
+          <p className="mt-4 text-base leading-7 text-charcoal/75">
+            Each principle shapes how we listen, support, and walk alongside the people we serve.
+          </p>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {page.values.map(
+            (value: { title: string; description: string; order: number }, index) => (
+              <article
+                key={`${value.order}-${value.title}`}
+                className="group min-h-64 rounded-3xl border border-charcoal/10 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-clay/35 hover:shadow-md md:p-7"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <span className="font-mono text-xs font-semibold tracking-[0.18em] text-clay/70">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span
+                    className="h-2 w-2 rounded-full bg-clay/60 transition group-hover:bg-clay"
+                    aria-hidden="true"
+                  />
+                </div>
+                <h2 className="mt-10 font-heading text-xl font-semibold tracking-tight text-bark md:text-2xl">
+                  {value.title}
+                </h2>
+                <div className="mt-3 h-px w-12 bg-clay/60" aria-hidden="true" />
+                <p className="mt-4 whitespace-pre-line text-[0.98rem] leading-7 text-charcoal/75">
+                  {value.description}
+                </p>
+              </article>
+            )
           )}
         </div>
       </section>
 
-      {/* Values */}
-      <section className="mt-14 rounded-2xl bg-sand/40 p-4 ring-1 ring-charcoal/10 md:mt-16 md:p-6">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {page.values.map((value: { title: string; description: string; order: number }) => (
-            <article key={`${value.order}-${value.title}`} className="ui-card p-6 md:p-7">
-              <h2 className="font-heading text-xl font-semibold tracking-tight md:text-2xl">
-                {value.title}
-              </h2>
-              <div className="mt-3 h-px w-12 bg-clay/60" aria-hidden="true"></div>
-              <p className="mt-4 whitespace-pre-line text-[1rem] leading-7 text-charcoal/85 md:text-[1.02rem]">
-                {value.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="mt-16 rounded-2xl bg-sand p-6 ring-1 ring-charcoal/10 md:mt-20 md:p-8">
-        <div className="grid gap-6 md:grid-cols-3 md:items-center">
-          <div className="md:col-span-2">
-            <h3 className="font-heading text-xl font-semibold md:text-2xl">{page.cta.title}</h3>
-            <p className="mt-2 text-charcoal/80">{page.cta.description}</p>
+      <section className="mx-5 mb-12 rounded-3xl bg-charcoal p-7 text-white shadow-lg sm:mx-8 sm:mb-16 sm:p-10 lg:mx-auto lg:max-w-7xl lg:p-12">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+              A thoughtful next step
+            </p>
+            <h3 className="mt-3 font-heading text-2xl font-semibold sm:text-3xl">
+              {page.cta.title}
+            </h3>
+            <p className="mt-3 leading-7 text-white/75">{page.cta.description}</p>
           </div>
-          <div className="md:justify-self-end">{renderCtaButton()}</div>
+          <div className="shrink-0">{renderCtaButton()}</div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
